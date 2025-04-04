@@ -1,0 +1,168 @@
+<ion-card>  
+  <div class="alert alert-danger" role="alert" *ngIf="validationData" style="text-align: center;">
+    {{ messageE }}
+  </div> 
+
+  <!-- INICIO SESSION -->
+  <div *ngIf="Statuslogin">
+    <ion-card-header style="text-align: center;">
+      <ion-card-title class="title">Inicio Sesión</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item [button]="true" class="itemsInput">
+          <ion-label position="stacked">Ingrese Usuario</ion-label>
+          <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item [button]="true" class="itemsInput">
+          <ion-label position="stacked">Ingrese Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="login.password" placeholder="" required="required"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" (click)="sendLogin()">Enviar</ion-button>
+      <br>
+      <!-- <div style="text-align: center; ">
+        <p style="color: blue;" (click)="recupCont()">¿Olvidaste tú contraseña?</p>
+      </div> -->
+    </ion-card-content>
+  </div> 
+
+  <!-- RECUPERACION  -->
+  <div *ngIf="StatusRecuperacion">
+    <ion-card-header style="text-align: center;">
+      <ion-card-title class="title" style="font-size: x-large;">Recuperación Contraseña</ion-card-title>
+    </ion-card-header>
+ 
+
+    <ion-card-content *ngIf="StatusRecuperacionPaso1">
+      <ion-list>
+        <ion-item [button]="true" class="itemsInput">
+          <ion-label position="stacked">Ingrese Usuario</ion-label>
+          <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+        </ion-item>
+        <br>
+        <ion-button color="medium" style="display: inline-block; width: 48%;" (click)="BackVerifyUser()">Atras</ion-button>
+        <ion-button style="display: inline-block; width: 48%;" (click)="VerifyUser()">Siguiente</ion-button>
+      </ion-list>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="StatusRecuperacionPaso2">
+    <p style="text-align: center; font-size: medium; color: blue; margin: 0;">
+      Preguntas de Seguridad
+      <ion-icon name="lock-closed"></ion-icon>
+    </p>
+
+    <ion-list>
+      <ion-item [button]="true" class="itemsInput">
+        <ion-label position="stacked">Pregunta 1</ion-label>
+        <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item [button]="true" class="itemsInput">
+        <ion-label position="stacked">Pregunta 2</ion-label>
+        <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item [button]="true" class="itemsInput">
+        <ion-label position="stacked">Pregunta 3</ion-label>
+        <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+      </ion-item>
+      <br>
+      <ion-button color="medium" style="display: inline-block; width: 48%;" (click)="BackVerifyQuest()">Atras</ion-button>
+      <ion-button style="display: inline-block; width: 48%;" (click)="VerifyQuest()">Siguiente</ion-button>
+    </ion-list>
+  </ion-card-content>
+
+    <ion-card-content *ngIf="StatusRecuperacionPaso3">
+      <ion-list>
+        <ion-item [button]="true" class="itemsInput">
+          <ion-label position="stacked">Ingrese Nueva Contraseña</ion-label>
+          <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item [button]="true" class="itemsInput">
+          <ion-label position="stacked">Ingrese Nuevamente Contraseña</ion-label>
+          <ion-input [clearInput]="true" [(ngModel)]="login.user" placeholder="" required="required"></ion-input>
+        </ion-item>
+        <br>
+        <ion-button color="none" style="display: inline-block; width: 96%; color: antiquewhite; background-color: #2dd55b; font-weight: 600;" (click)="ConfirmPassword()">
+          Confirmar  
+          <ion-icon color="light" name="shield-checkmark"></ion-icon>
+        </ion-button>
+      </ion-list>
+    </ion-card-content>
+
+  </div>
+
+</ion-card>
+
+
+<!-- Modal VerifyAPI -->
+<ion-modal [isOpen]="isModalOpenAPI" class="modalDown" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="handleModalDismiss()">
+  <ng-template>
+  <div class="block">
+      <img src="../../assets/errors/not_wifi.svg" style="width: 40%; height: 40%; margin-bottom: 5%;">
+      <p style="display: inline-block; font-size: xx-large;">Error de Conexión</p><br>
+      <p style="display: inline-block; font-size: medium;">Verifique su <strong style="color: rgba(17, 17, 228, 0.863);" (click)="clear()">c̲o̲n̲e̲x̲i̲ó̲n̲</strong> al Servidor</p>  
+  </div>
+  </ng-template>
+</ion-modal>
+<!-- VerifyAPI Modal -->
+
+<!-- Modal API -->
+<ion-modal #modalnfo [isOpen]="btn" class="modalAddres" (didDismiss)="this.statusAPI();">
+  <ng-template>
+    <ion-content>
+      <ion-toolbar color="primary" style="text-align: center;">
+        <ion-title class="titleModal">Modificar Red</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="light" (click)="this.statusAPI();">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+      <ion-list style="width: 100%; padding-left: 6%; padding-bottom: 2%; margin-bottom: 5%;">
+
+        <p style="font-size: medium; margin: 0; margin-top: 5%; margin-bottom: 0;">URL</p>
+        <p class="ExampleAddres">{{protocolo}}://{{dominio}}:{{puerto}}</p>
+
+        <p style="font-size: small; margin: 0;">Protocolo</p>
+        <input [(ngModel)]="protocolo" type="radio" color="primary" value="http"> 
+        <p style="color: grey; display: inline-block;">http</p>   
+        <input  [(ngModel)]="protocolo" type="radio" color="primary" value="https" > 
+        <p  style="color: grey; display: inline-block;">https</p>
+
+        <p style="font-size: small; margin: 0;" [ngClass]="{'Err_iP': Err_iP}">Dirección IP ó Dominio</p>
+        <input  [(ngModel)]="dominio" style="font-size: medium;" placeholder="Ej: SiaAgro.com" class="inputAddres">
+
+
+        <p style="font-size: small; margin: 0;" [ngClass]="{'Err_iP': Err_Pt}">Puerto (Opcional)</p>
+        <input  [(ngModel)]="puerto" type="number" style="font-size: medium;" placeholder="Ej: 8080" class="inputAddres">
+
+      </ion-list>
+
+      <ion-buttons class="btn">
+        <ion-button color="primary" fill="outline" (click)="resetAddress(modalnfo)">Resetear</ion-button>
+        <ion-button color="primary" fill="solid" (click)="editAddress(modalnfo)">Confirmar</ion-button>
+      </ion-buttons>
+
+    </ion-content>
+  </ng-template>
+  </ion-modal>
+  <!-- Modal API -->
+
+
+
+
+
+
+
+
+
+
+
+
+

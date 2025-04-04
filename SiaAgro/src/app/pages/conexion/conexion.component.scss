@@ -1,0 +1,109 @@
+input[type="radio"] {
+    accent-color: blue;
+}
+
+input:focus {
+    outline: none; /* Quita el borde de enfoque */
+}
+
+.breadCrumbIcons{
+    font-size: x-small;
+}
+
+.titleG{
+    font-weight: 700;
+    font-size: 40px; 
+    padding: 0;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.cardGeneral{
+    text-align: center;
+
+}
+
+.iconModify{
+    color: green;
+    font-size: x-large; 
+    display: inline-block; 
+    position: relative;
+    margin-bottom: -0.7%;
+}
+.addres{
+    font-size: medium; 
+    margin: 0; 
+    display: inline-block;
+}
+.addresTitle{
+    margin: 0; 
+    color: black; 
+    font-weight: 600;
+}
+
+.divAddres{
+    margin-bottom: 20%;
+}
+
+.listAgg{
+    border-bottom: 1px solid rgb(0, 4, 255);
+    margin-bottom: 1vh;
+    padding-top: 0;
+
+}
+
+.ExampleAddres{
+    margin-bottom: 0; 
+    text-align: center; 
+    font-size: medium; 
+    color: rgb(75, 75, 219);
+}
+
+.inputAddres{
+    border: none;
+    border-bottom: 1px solid rgb(35, 32, 204); 
+    margin-bottom: 5%;
+    width: 87%;
+}
+
+.btn{
+    display: inline;
+    text-align: center;
+    margin-left: 10%;
+    padding: 0;
+    margin-bottom: 4%;
+}
+
+.modalAddres{
+    padding: 10%; 
+    padding-bottom: 30vmax; 
+    background-color: rgba(78, 72, 72, 0.262);
+}
+
+.titleModal{
+    margin-left: 10%;
+    font-size:large;
+}
+
+
+.Err_iP{
+    color: red;
+}
+
+
+
+
+.block {
+    width: 100%;
+    height: 300px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 10%;
+    // border: 2px solid rgb(78, 224, 20);
+  }
+
+.modalDown{
+    // border: 2px solid rgb(224, 20, 20);
+    --height: auto;
+    padding-top: 70%;
+}

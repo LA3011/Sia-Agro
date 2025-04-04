@@ -1,0 +1,60 @@
+(3.9.13) la@la-Latitude-5290:~/Documentos/siaAgro$ /home/la/.pyenv/versions/3.9.13/bin/python /home/la/Documentos/siaAgro/Proyecto/InteligenciaArtificial/entrenamientoModels/entrenar.py
+Found 8480 images belonging to 2 classes.
+Found 2119 images belonging to 2 classes.
+2025-03-20 05:34:28.981254: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Iniciando Transfer Learning con ResNet50...
+Epoch 1/15
+265/265 [==============================] - ETA: 0s - loss: 0.6591 - accuracy: 0.6466/home/la/.pyenv/versions/3.9.13/lib/python3.9/site-packages/keras/engine/functional.py:1410: CustomMaskWarning: Custom mask layers require a config and must override get_config. When loading, the custom mask layer must be passed to the custom_objects argument.
+  layer_config = serialize_layer_fn(layer)
+265/265 [==============================] - 1032s 4s/step - loss: 0.6591 - accuracy: 0.6466 - val_loss: 0.5547 - val_accuracy: 0.7386 - lr: 1.0000e-04
+Epoch 2/15
+265/265 [==============================] - 1156s 4s/step - loss: 0.5528 - accuracy: 0.7183 - val_loss: 0.5446 - val_accuracy: 0.7452 - lr: 1.0000e-04
+Epoch 3/15
+265/265 [==============================] - 1132s 4s/step - loss: 0.5423 - accuracy: 0.7301 - val_loss: 0.5300 - val_accuracy: 0.7574 - lr: 1.0000e-04
+Epoch 4/15
+265/265 [==============================] - 1179s 4s/step - loss: 0.5349 - accuracy: 0.7344 - val_loss: 0.5235 - val_accuracy: 0.7617 - lr: 1.0000e-04
+Epoch 5/15
+265/265 [==============================] - 1144s 4s/step - loss: 0.5324 - accuracy: 0.7360 - val_loss: 0.5110 - val_accuracy: 0.7711 - lr: 1.0000e-04
+Epoch 6/15
+265/265 [==============================] - 1134s 4s/step - loss: 0.5282 - accuracy: 0.7396 - val_loss: 0.5050 - val_accuracy: 0.7758 - lr: 1.0000e-04
+Epoch 7/15
+265/265 [==============================] - 1155s 4s/step - loss: 0.5262 - accuracy: 0.7452 - val_loss: 0.4946 - val_accuracy: 0.7763 - lr: 1.0000e-04
+Epoch 8/15
+265/265 [==============================] - 1129s 4s/step - loss: 0.5263 - accuracy: 0.7445 - val_loss: 0.4942 - val_accuracy: 0.7796 - lr: 1.0000e-04
+Epoch 9/15
+265/265 [==============================] - 1129s 4s/step - loss: 0.5187 - accuracy: 0.7482 - val_loss: 0.4936 - val_accuracy: 0.7636 - lr: 1.0000e-04
+Epoch 10/15
+265/265 [==============================] - 1115s 4s/step - loss: 0.5139 - accuracy: 0.7509 - val_loss: 0.4784 - val_accuracy: 0.7867 - lr: 1.0000e-04
+Epoch 11/15
+265/265 [==============================] - 1116s 4s/step - loss: 0.5120 - accuracy: 0.7522 - val_loss: 0.4732 - val_accuracy: 0.7820 - lr: 1.0000e-04
+Epoch 12/15
+265/265 [==============================] - 35498s 134s/step - loss: 0.5116 - accuracy: 0.7526 - val_loss: 0.4745 - val_accuracy: 0.7768 - lr: 1.0000e-04
+Epoch 13/15
+265/265 [==============================] - 1112s 4s/step - loss: 0.5063 - accuracy: 0.7559 - val_loss: 0.4688 - val_accuracy: 0.7824 - lr: 1.0000e-04
+Epoch 14/15
+265/265 [==============================] - 30291s 115s/step - loss: 0.5038 - accuracy: 0.7637 - val_loss: 0.4605 - val_accuracy: 0.7966 - lr: 1.0000e-04
+Epoch 15/15
+265/265 [==============================] - 1079s 4s/step - loss: 0.5015 - accuracy: 0.7552 - val_loss: 0.4539 - val_accuracy: 0.7994 - lr: 1.0000e-04
+Iniciando Fine-Tuning con ResNet50...
+Epoch 1/10
+265/265 [==============================] - 1125s 4s/step - loss: 2.0183 - accuracy: 0.6068 - val_loss: 0.6315 - val_accuracy: 0.7041 - lr: 1.0000e-05
+Epoch 2/10
+265/265 [==============================] - 1171s 4s/step - loss: 0.5196 - accuracy: 0.7565 - val_loss: 0.4364 - val_accuracy: 0.7985 - lr: 1.0000e-05
+Epoch 3/10
+265/265 [==============================] - 1182s 4s/step - loss: 0.4981 - accuracy: 0.7712 - val_loss: 0.4348 - val_accuracy: 0.7952 - lr: 1.0000e-05
+Epoch 4/10
+265/265 [==============================] - 1180s 4s/step - loss: 0.4815 - accuracy: 0.7818 - val_loss: 0.4348 - val_accuracy: 0.8292 - lr: 1.0000e-05
+Epoch 5/10
+265/265 [==============================] - 1196s 5s/step - loss: 0.4556 - accuracy: 0.7943 - val_loss: 0.4285 - val_accuracy: 0.8277 - lr: 1.0000e-05
+Epoch 6/10
+265/265 [==============================] - 1184s 4s/step - loss: 0.4492 - accuracy: 0.7969 - val_loss: 0.3894 - val_accuracy: 0.8594 - lr: 1.0000e-05
+Epoch 7/10
+265/265 [==============================] - 1206s 5s/step - loss: 0.4370 - accuracy: 0.8024 - val_loss: 0.3574 - val_accuracy: 0.8849 - lr: 1.0000e-05
+Epoch 8/10
+265/265 [==============================] - 1188s 4s/step - loss: 0.4248 - accuracy: 0.8129 - val_loss: 0.3815 - val_accuracy: 0.8594 - lr: 1.0000e-05
+Epoch 9/10
+265/265 [==============================] - 1188s 4s/step - loss: 0.4242 - accuracy: 0.8119 - val_loss: 0.3374 - val_accuracy: 0.8551 - lr: 1.0000e-05
+Epoch 10/10
+265/265 [==============================] - 1193s 4s/step - loss: 0.4227 - accuracy: 0.8176 - val_loss: 0.3362 - val_accuracy: 0.8443 - lr: 1.0000e-05
+Modelo guardado en: /home/la/Documentos/siaAgro/Proyecto/InteligenciaArtificial/ModelosGeneradosH5/3. [ResNet50] + [(15-10)] + [Augmentation] + [neu

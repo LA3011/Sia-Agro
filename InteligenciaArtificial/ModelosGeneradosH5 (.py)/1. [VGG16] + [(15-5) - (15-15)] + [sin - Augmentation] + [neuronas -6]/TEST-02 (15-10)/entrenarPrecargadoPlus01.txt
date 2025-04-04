@@ -1,0 +1,56 @@
+Found 8000 images belonging to 2 classes.
+Found 1999 images belonging to 2 classes.
+2025-03-16 04:37:42.270381: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Iniciando Transfer Learning...
+Epoch 1/15
+250/250 [==============================] - 806s 3s/step - loss: 0.1676 - accuracy: 0.9349 - val_loss: 0.0527 - val_accuracy: 0.9825 - lr: 1.0000e-04
+Epoch 2/15
+250/250 [==============================] - 810s 3s/step - loss: 0.0890 - accuracy: 0.9703 - val_loss: 0.0451 - val_accuracy: 0.9840 - lr: 1.0000e-04
+Epoch 3/15
+250/250 [==============================] - 830s 3s/step - loss: 0.0749 - accuracy: 0.9744 - val_loss: 0.0360 - val_accuracy: 0.9875 - lr: 1.0000e-04
+Epoch 4/15
+250/250 [==============================] - 850s 3s/step - loss: 0.0682 - accuracy: 0.9765 - val_loss: 0.0325 - val_accuracy: 0.9870 - lr: 1.0000e-04
+Epoch 5/15
+250/250 [==============================] - 841s 3s/step - loss: 0.0666 - accuracy: 0.9764 - val_loss: 0.0347 - val_accuracy: 0.9870 - lr: 1.0000e-04
+Epoch 6/15
+250/250 [==============================] - 821s 3s/step - loss: 0.0603 - accuracy: 0.9776 - val_loss: 0.0312 - val_accuracy: 0.9880 - lr: 1.0000e-04
+Epoch 7/15
+250/250 [==============================] - 821s 3s/step - loss: 0.0565 - accuracy: 0.9787 - val_loss: 0.0323 - val_accuracy: 0.9875 - lr: 1.0000e-04
+Epoch 8/15
+250/250 [==============================] - 844s 3s/step - loss: 0.0666 - accuracy: 0.9786 - val_loss: 0.0372 - val_accuracy: 0.9855 - lr: 1.0000e-04
+Epoch 9/15
+250/250 [==============================] - 842s 3s/step - loss: 0.0545 - accuracy: 0.9804 - val_loss: 0.0397 - val_accuracy: 0.9860 - lr: 1.0000e-04
+Epoch 10/15
+250/250 [==============================] - 846s 3s/step - loss: 0.0574 - accuracy: 0.9795 - val_loss: 0.0324 - val_accuracy: 0.9880 - lr: 1.0000e-04
+Epoch 11/15
+250/250 [==============================] - 869s 3s/step - loss: 0.0517 - accuracy: 0.9820 - val_loss: 0.0391 - val_accuracy: 0.9840 - lr: 1.0000e-04
+Epoch 12/15
+250/250 [==============================] - 852s 3s/step - loss: 0.0461 - accuracy: 0.9830 - val_loss: 0.0374 - val_accuracy: 0.9855 - lr: 2.0000e-05
+Epoch 13/15
+250/250 [==============================] - 801s 3s/step - loss: 0.0479 - accuracy: 0.9831 - val_loss: 0.0382 - val_accuracy: 0.9840 - lr: 2.0000e-05
+Epoch 14/15
+250/250 [==============================] - 811s 3s/step - loss: 0.0444 - accuracy: 0.9854 - val_loss: 0.0375 - val_accuracy: 0.9850 - lr: 2.0000e-05
+Epoch 15/15
+250/250 [==============================] - 778s 3s/step - loss: 0.0451 - accuracy: 0.9837 - val_loss: 0.0361 - val_accuracy: 0.9870 - lr: 2.0000e-05
+Iniciando Fine-Tuning...
+Epoch 1/10
+250/250 [==============================] - 914s 4s/step - loss: 0.0457 - accuracy: 0.9847 - val_loss: 0.0553 - val_accuracy: 0.9830 - lr: 1.0000e-05
+Epoch 2/10
+250/250 [==============================] - 946s 4s/step - loss: 0.0383 - accuracy: 0.9876 - val_loss: 0.0235 - val_accuracy: 0.9900 - lr: 1.0000e-05
+Epoch 3/10
+250/250 [==============================] - 847s 3s/step - loss: 0.0284 - accuracy: 0.9904 - val_loss: 0.0301 - val_accuracy: 0.9900 - lr: 1.0000e-05
+Epoch 4/10
+250/250 [==============================] - 866s 3s/step - loss: 0.0272 - accuracy: 0.9908 - val_loss: 0.0591 - val_accuracy: 0.9730 - lr: 1.0000e-05
+Epoch 5/10
+250/250 [==============================] - 861s 3s/step - loss: 0.0223 - accuracy: 0.9926 - val_loss: 0.0487 - val_accuracy: 0.9810 - lr: 1.0000e-05
+Epoch 6/10
+250/250 [==============================] - 845s 3s/step - loss: 0.0187 - accuracy: 0.9944 - val_loss: 0.0505 - val_accuracy: 0.9820 - lr: 1.0000e-05
+Epoch 7/10
+250/250 [==============================] - 839s 3s/step - loss: 0.0158 - accuracy: 0.9944 - val_loss: 0.0301 - val_accuracy: 0.9885 - lr: 1.0000e-05
+Epoch 8/10
+250/250 [==============================] - 848s 3s/step - loss: 0.0173 - accuracy: 0.9942 - val_loss: 0.0283 - val_accuracy: 0.9910 - lr: 2.0000e-06
+Epoch 9/10
+250/250 [==============================] - 828s 3s/step - loss: 0.0121 - accuracy: 0.9962 - val_loss: 0.0314 - val_accuracy: 0.9885 - lr: 2.0000e-06
+Epoch 10/10
+250/250 [==============================] - 826s 3s/step - loss: 0.0116 - accuracy: 0.9964 - val_loss: 0.0304 - val_accuracy: 0.9895 - lr: 2.0000e-06

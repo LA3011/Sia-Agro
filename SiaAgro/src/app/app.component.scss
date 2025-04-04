@@ -1,0 +1,121 @@
+#l1{
+    background-color: #1b263100; 
+    color: #fefeff;
+    background:#1b2631
+}
+
+ion-item:active {
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.clickable-element {
+    visibility: hidden; /* Comienza oculto */
+    cursor: pointer; /* Cambia el cursor al hacer clic */
+}
+
+.clickable-element.clicked {
+    visibility: visible; /* Se vuelve visible cuando se hace clic */
+}
+
+
+.iconInicio{
+    margin-right: 15px; 
+    color: #eff2f5;
+}
+.labelInicio{
+    color: #eff2f5;
+}
+.menu{
+    background-color: #1b2631; 
+    height: 12%; 
+    align-items: center; 
+    display: flex; 
+    align-items: center; 
+    text-align:center;
+}
+.containerOpcion{
+    color: #1b2631;
+}
+.containerMenuSub{
+    background-color: #1b2631; 
+    height: 100vh; 
+    align-items: center;
+}
+.containerMenu{
+    border: 1px solid black; 
+    background-color: #1b2631;
+}
+.sidebar{
+    background-color: #0c7ae9;
+}
+
+.divisorIA{
+    height: 1vh; 
+    padding-left: 26%;
+}
+.divisorConfig{
+    height: 1vh; 
+    padding-left: 32%;
+}
+
+
+#header{
+    background-color: #1b2631; 
+    color: #1b2631;
+    padding: 1%;
+    align-items: center;
+    display: flex;
+    align-items: center; 
+    height: 10%;
+}
+.titlePages{
+    display: inline-block; 
+    color: #eff2f5;
+}
+.titlePageButton{
+    color: #eff2f5; 
+    font-size: 230%;
+}
+.titleImg{
+    height: 90%; 
+    background-color:#1b2631;
+}
+.SettingsOpcion{
+    color: #eff2f5; 
+    font-size: 230%; 
+    margin-right: 5%; 
+    right: 0vh; 
+    position: absolute;
+}
+.SettingsSubOpcion{
+    margin-right: 5px;
+    margin-right: 5px;
+}
+
+
+
+
+
+
+.block {
+    width: 100%;
+    height: 300px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 10%;
+    // border: 2px solid rgb(78, 224, 20);
+  }
+
+  ion-modal {
+    --height: auto;
+  }
+
+  .modalDown{
+    // border: 2px solid rgb(224, 20, 20);
+    padding-top: 70%;
+
+  }
+
+.subOpcion{
+    margin-left: 10%;
+}

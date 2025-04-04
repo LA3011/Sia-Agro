@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "tsc -w",
+    "dev": "nodemon build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "@ionic-native/camera": "^5.36.0",
+    "@ionic-native/file": "^5.36.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "adm-zip": "^0.5.14",
+    "bcryptjs": "^2.4.3",
+    "browserify-zlib": "^0.2.0",
+    "connect-timeout": "^1.9.0",
+    "cors": "^2.8.5",
+    "D": "^1.0.0",
+    "express": "^4.19.2",
+    "file-type": "^19.2.0",
+    "fs-extra": "^11.2.0",
+    "https": "^1.0.0",
+    "image-type": "^5.2.0",
+    "jszip": "^3.10.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.8",
+    "pg": "^8.11.5",
+    "pg-promise": "^11.7.8",
+    "promise-mysql": "^5.2.0",
+    "ps-node": "^0.1.6",
+    "unzipper": "^0.12.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/pg": "^8.11.6",
+    "nodemon": "^3.1.1"
+  }
+}

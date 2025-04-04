@@ -1,0 +1,133 @@
+<ion-app>    
+<ion-content>
+
+  <!-- refresh -->
+  <ion-refresher slot="fixed" [pullFactor]="0.5" [pullMin]="100" [pullMax]="200" (ionRefresh)="refresh($event)">
+    <ion-refresher-content refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
+ 
+    <!-- Sidebar -->
+    <ion-menu *ngIf="userPass" color="danger" id="l1" contentId="main-content" style="background-color: #311b1b3b;"> 
+      <div class="containerMenu">  
+        <div class="containerMenuSub">
+          <div class="menu">
+            <ion-title style="font-size: 2rem;">Menú</ion-title>
+          </div>
+          <div>
+              <ion-menu-toggle> 
+
+                <ion-item [button]="true" color="#eff2f5" [routerLink]="['/inicio']" class="containerOpcion">
+                  <ion-icon class="iconInicio" name="home"></ion-icon>
+                  <ion-label class="labelInicio">Inicio</ion-label>
+                </ion-item>
+                <ion-item *ngIf="permisosUsers.programas.animales" [button]="true" color="#1b2631;" href="animales" class="containerOpcion">
+                  <ion-icon class="iconInicio" name="paw-sharp"></ion-icon>
+                  <ion-label class="labelInicio">Animales</ion-label>
+                </ion-item>
+                <ion-item *ngIf="permisosUsers.programas.cultivos" href="cultivos" [button]="true" color="#1b2631;" class="containerOpcion">
+                  <ion-icon class="iconInicio" name="leaf"></ion-icon>
+                  <ion-label class="labelInicio">Cultivos</ion-label>
+                </ion-item>
+                <ion-item *ngIf="permisosUsers.programas.usuarios" [button]="true" color="#1b2631;" href="usuarios" class="containerOpcion">
+                  <ion-icon class="iconInicio" name="people"></ion-icon>
+                  <ion-label class="labelInicio">Usuarios / Perfiles</ion-label>
+                </ion-item>
+
+              </ion-menu-toggle>
+                
+
+                <ion-item *ngIf="permisosUsers.programas.intelArt" color="#1b2631;" class="containerOpcion submenu" (click)="menuModuloIA()">
+                  <ion-icon class="iconInicio" name="logo-ionitron"></ion-icon>
+                  <ion-label class="labelInicio">Inteligencia Art.</ion-label>
+                  <ion-icon class="iconInicio" name="{{iconDespleIA}}"></ion-icon>
+                </ion-item>
+                <div *ngIf="moduloIA"> 
+                  <ion-menu-toggle>
+                    <ion-item [button]="true" *ngIf="plataformView == 'PC' && permisosUsers.modulos.modelos" color="#1b2631;" class="containerOpcion" href="/Inteligencia-Artificial-Models" (click)="menuModuloIA()">
+                      <ion-icon class="iconInicio subOpcion" name="cube-outline"></ion-icon>
+                      <ion-label class="labelInicio">Modelos</ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="permisosUsers.modulos.detector" [button]="" color="#1b2631;" class="containerOpcion" href="/Inteligencia-Artificial" (click)="menuModuloIA()">
+                      <ion-icon class="iconInicio subOpcion" name="aperture-outline"></ion-icon>
+                      <ion-label class="labelInicio">Detector</ion-label>
+                    </ion-item>
+                   
+                  </ion-menu-toggle>
+                </div>
+
+                <ion-item color="#1b2631;" class="containerOpcion submenu" (click)="menuModuloConfig()">
+                  <ion-icon class="iconInicio" name="settings-outline"></ion-icon>
+                  <ion-label class="labelInicio">Configuración</ion-label>
+                  <ion-icon class="iconInicio" name="{{iconDespleConfig}}"></ion-icon>
+                </ion-item>
+                <div *ngIf="moduloConfig"> 
+                  <ion-menu-toggle>
+                    <ion-item [button]="" color="#1b2631;" class="containerOpcion" [routerLink]="['/Conexion']" (click)="menuModuloConfig()">
+                      <ion-icon class="iconInicio subOpcion" name="wifi-outline"></ion-icon>
+                      <ion-label class="labelInicio">Conexión Red</ion-label>
+                    </ion-item>
+                    <!-- <ion-item [button]="" color="#1b2631;" class="containerOpcion" [routerLink]="['/error404']" (click)="menuModuloConfig();">
+                      <ion-icon class="iconInicio subOpcion" name="help-circle-outline"></ion-icon>
+                      <ion-label class="labelInicio">Ayuda</ion-label>
+                    </ion-item> -->
+                    <ion-item [button]="" color="#1b2631;" class="containerOpcion" (click)="menuModuloConfig(); exit();">
+                      <ion-icon class="iconInicio subOpcion" name="exit-outline"></ion-icon>
+                      <ion-label class="labelInicio">Salir</ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                </div>
+
+            </div>
+          </div> 
+        </div>
+      </ion-menu>
+    <!-- Sidebar End  -->
+     
+    <!-- Header -->
+    <div class="ion-page" id="main-content">
+        <div id="header"> 
+
+          <!-- TitlePage -->
+          <ion-buttons slot="start" class="titlePage">
+            <ion-menu-button class="titlePageButton"></ion-menu-button>
+          </ion-buttons>
+          <!-- TitlePage End-->
+           
+          <!-- TitlePage -->
+          <img src="../assets/background/LOGO-siaAgro0-removebg-preview (1).png" class="titleImg" alt="">
+          <!-- TitlePage End-->
+          
+          <!-- Settings -->
+          <ion-icon *ngIf="userPass" id="popover-button" slot="end" name="settings-outline" class="SettingsOpcion">Configuracion</ion-icon>          
+          <ion-popover *ngIf="userPass" trigger="popover-button" [dismissOnSelect]="true" style="border-radius: 30px;">
+              <ng-template>
+                <ion-content>
+                  <ion-list>
+                    <ion-item [button]="true" [detail]="false">
+                      <ion-icon name="help-circle-outline" class="SettingsSubOpcion"></ion-icon>
+                      Ayuda
+                    </ion-item>
+                    <ion-item [button]="true" id="nested-trigger" (click)="exit()">
+                      <ion-icon name="exit-outline" class="SettingsSubOpcion"></ion-icon>
+                      Salir
+                    </ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+          </ion-popover>
+          <!-- Settings End  -->
+
+        </div>
+      <!-- PaginaContent -->
+      <ion-content>
+        <ion-router-outlet/>
+      </ion-content>
+      <!-- PaginaContent End -->
+    </div>
+    <!-- Header End -->
+</ion-content>
+</ion-app>
+  
+  
+  
+

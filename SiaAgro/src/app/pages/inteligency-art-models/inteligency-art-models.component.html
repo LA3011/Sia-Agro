@@ -1,0 +1,517 @@
+<ion-card style="height: 100%;"> 
+  <!-- Mesagge-Actions --> 
+  <div class="alert alertModal"  role="alert" *ngIf="message">
+    <ion-icon name="alert-circle-outline" style="font-size: xx-large;"></ion-icon>  
+    {{message}}  
+  </div>
+  <!-- Fin Mesagge-Actions --> 
+   <!-- Mesagge-Actions --> 
+  <div class="alert successModal"  role="alert" *ngIf="messageSuccess">
+    <ion-icon name="checkmark-circle-outline" style="font-size: xx-large;"></ion-icon>  
+    {{messageSuccess}}  
+  </div>
+  <!-- Fin Mesagge-Actions --> 
+
+  <!-- MIGAS-PAN -->
+  <ion-breadcrumbs> 
+    <ion-breadcrumb class="breadCrumb">
+      Modelos
+      <ion-icon class="breadCrumbIcons" slot="end" name="logo-ionitron"></ion-icon>
+    </ion-breadcrumb>
+    <ion-breadcrumb class="breadCrumb" *ngIf="(stepsProcess === 1 && !menu) || menu=='listTag'">
+      Etiquetas
+      <ion-icon class="breadCrumbIcons" slot="end" name="pricetags"></ion-icon>
+    </ion-breadcrumb>
+    <ion-breadcrumb class="breadCrumb" *ngIf="stepsProcess === 1 && !menu && tokenExistentTag=='Agregar'">
+      Agregar
+      <ion-icon class="breadCrumbIcons" slot="end" name="add-outline"></ion-icon>
+    </ion-breadcrumb>
+    <ion-breadcrumb class="breadCrumb" *ngIf="stepsProcess === 1 && !menu && tokenExistentTag=='Expandir'">
+      Expandir
+      <ion-icon class="breadCrumbIcons" slot="end" name="expand"></ion-icon>
+    </ion-breadcrumb>
+    <ion-breadcrumb class="breadCrumb" *ngIf="menu=='trainTag'">
+      Entrenamiento
+      <ion-icon class="breadCrumbIcons" slot="end" name="barbell"></ion-icon>
+    </ion-breadcrumb>
+  </ion-breadcrumbs>    
+
+  <!-- TITLE --> 
+  <ion-card-header class="head-title">
+    <ion-card-title class="title">Gestionar Modelos</ion-card-title>
+  </ion-card-header> 
+
+    <!-- [Menú] --> 
+    <ion-card class="pass1 menuGe" *ngIf="stepsProcess === 0 && !menu"> 
+      <ion-button color="primary" expand="block" style="size: 40%; margin-bottom: 5.3%;" (click)="myTags()">
+         Mis Etiquetas   
+         <ion-icon name="pricetags"></ion-icon>
+      </ion-button>
+
+      <!-- Noficación Change -->
+      <ion-badge color="danger" class="notificacion single" *ngIf="(notificacion=='pricetags' || notificacion=='expand')">
+        <ion-icon name="{{notificacion}}"></ion-icon> +
+      </ion-badge>
+
+      <ion-badge color="danger" class="notificacion double" *ngIf="(notificacion == 'double')">
+        <div style="display: inline-block;">
+          <ion-icon name="pricetags"></ion-icon> + <ion-icon name="expand"></ion-icon>
+        </div>
+      </ion-badge>
+      <!-- Noficación Change -->
+
+
+      <ion-button color="primary" expand="block" style="size: 40%; margin-bottom: 5%;" (click)="entrenar()">
+        Entrenar Modelo  
+        <ion-icon name="barbell"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" expand="block" style="size: 40%;" [routerLink]="['/Inteligencia-Artificial']">
+        Probar Modelo  
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+    </ion-card>
+     
+    <!-- [Etiquetas] -->
+    <p class="pasos" *ngIf="menu=='listTag'">Listado Etiquetas</p>
+    <ion-card *ngIf="menu=='listTag'" class="listtag"> 
+      <ion-item *ngFor="let tag of lisMytags">
+        <ion-label class="tag">
+          {{ tag }}
+        </ion-label> 
+        <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="light" id="open-modal-info-{{tag}}"  (click)="listTagInfo(tag)">
+          <ion-icon name="information-circle-outline" color="dark"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="PrivMyPerfil.editar" size="small" color="primary" (click)="expandTag(tag)">
+          <ion-icon name="expand"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="PrivMyPerfil.eliminar" size="small" color="danger" id="open-modal-delete-{{tag}}">
+          <ion-icon name="trash" slot="icon-only"></ion-icon>
+        </ion-button>
+ 
+        <!-- Modal Info -->
+        <ion-modal *ngIf="PrivMyPerfil.ver" #modalnfo trigger="open-modal-info-{{tag}}" style="padding: 10%; padding-bottom: 40vmax; background-color: rgba(78, 72, 72, 0.262);">
+          <ng-template>
+            <ion-content style="width: auto; max-height: 100%;" >
+              <ion-toolbar color="medium" style="text-align: center;">
+                <ion-title style="font-size: medium; margin-left:1.5%;">Información Etiqueta</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button color="light" (click)="modalnfo.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <ion-list style="padding-bottom: 1%;">
+                <ion-item>
+                  <ion-label style="text-align: center;">
+                    <p style="margin:0;">
+                      Nombre de Etiqueta: 
+                      <strong>{{tag}}</strong>
+                    </p>
+                    <p style="margin:0;">
+                      Imagenes de Entrenamiento: 
+                      <strong *ngIf="InfoListTag.entrenamiento">{{InfoListTag.entrenamiento}}</strong>
+                      <strong *ngIf="!InfoListTag.entrenamiento">Calculando...</strong>
+                    </p>
+                    <p style="margin: 0;">
+                      Imagenes de Validación: 
+                      <strong *ngIf="InfoListTag.validacion">{{InfoListTag.validacion}}</strong>
+                      <strong *ngIf="!InfoListTag.validacion">Calculando...</strong>
+                    </p>
+                    <p>
+                      Descripción:  
+                      <ion-button (click)="descInfoM(modalnfo,tag);" color="none" style="color: black; margin: 0; margin-bottom: 3%; font-size: x-small;">Ver más</ion-button>
+                    </p>
+                    <p style="margin:0;">Muestra:</p>
+                    <h2 style="margin: 0;"><strong>Total {{ InfoListTag.entrenamiento + InfoListTag.validacion }}</strong></h2>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+              <div style="text-align: center; margin-top: 0vh;">
+                <ion-button color="dark" fill="outline" (click)="cancelarInfoTagg(modalnfo)">Cancelar</ion-button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+        <!-- Modal Info -->
+
+        <!-- Modal Delete -->
+        <ion-modal *ngIf="PrivMyPerfil.eliminar" #modalDelete trigger="open-modal-delete-{{tag}}" style="padding: 10%; padding-bottom: 40vmax; background-color: rgba(78, 72, 72, 0.262);">
+          <ng-template>
+            <ion-content style="width: auto; border-radius: 15%; max-height: 100%">
+              <ion-toolbar color="danger" style="text-align: center;">
+                <ion-title>Eliminar Etiqueta</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button color="light" (click)="modalDelete.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <ion-list>
+                <ion-item style="padding: 5px;">
+                  <ion-label style="text-align: center;">
+                    <h2 style="font-size: medium;">¿Desea Eliminar esta Etiqueta?</h2>
+                    <p style="font-size:xx-large; color: grey; font-size: x-large;">"{{tag}}"</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+              <div style="text-align: center; margin-top: 0vh;">
+                <ion-button color="danger" fill="outline" (click)="modalDelete.dismiss()">Cancelar</ion-button>
+                <ion-button color="danger" (click)="deleteTag(tag,modalDelete)">Confirmar</ion-button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+        <!-- Modal Delete -->
+        
+        <!-- Detalle Descripcion Etiqueta -->
+        <ion-modal #modalInfo backdropDismiss="false" [isOpen]="btnOpenModalInfoTag" style="padding-top: 10%; padding-left: 5%; padding-right: 5%;">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar color="medium">
+                <ion-title style="font-size: medium; text-align: center;">Descripción Etiqueta</ion-title>
+                <ion-buttons slot="end" style="margin-right: 3%;">
+                  <ion-button (click)="modalInfo.dismiss(); btnOpenModalInfoTag = false">X</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+
+              <span style="color: rgb(3, 3, 3); margin-left: 5%; display: block;">Tipo Deteccion</span>
+              <input disabled style="color: rgb(3, 3, 3); margin-left: 5%;" [(ngModel)]="myDescripTag.amenaza" type="radio" [value]="true" (ngModelChange)="onAmenazaChangeUpdate($event)"> 
+              <p style=" color: rgb(3, 3, 3); display: inline-block; margin-bottom: 0;">Plaga / Hongo (Amenaza)</p><br>
+              <input disabled style="margin-left: 5%;" [(ngModel)]="myDescripTag.amenaza" type="radio" [value]="false" (ngModelChange)="onAmenazaChangeUpdate($event)"> 
+              <p style="color: rgb(8, 8, 8); display: inline-block;">Planta / Cultivo</p>
+  
+
+              <p *ngIf="myDescripTag.amenaza" style="font-size: small; margin: 0; margin-left: 5%;  color:black; font-weight: 600; padding: 0;">Definición (Plaga)</p>
+              <p *ngIf="!myDescripTag.amenaza" style="font-size: small; margin: 0; margin-left: 5%;  color:black; font-weight: 600; padding: 0;">Definición (Planta/Cultivo)</p>
+              <ion-item style="margin-bottom: 5%;">
+                <ion-textarea readonly [autoGrow]="true" labelPlacement="stacked" value="{{myDescripTag.definicion}}"></ion-textarea>
+              </ion-item>
+              
+              <p *ngIf="myDescripTag.amenaza" style="font-size: small; margin: 0; margin-left: 5%;  color:black; font-weight: 600; padding: 0;">Familia que pertenece (Plaga)</p>
+              <p *ngIf="!myDescripTag.amenaza" style="font-size: small; margin: 0; margin-left: 5%;  color:black; font-weight: 600; padding: 0;">Familia que pertenece (Planta/Cultivo)</p>
+              <ion-item style="margin-bottom: 5%;">
+                <ion-textarea readonly [autoGrow]="true" labelPlacement="stacked" value="{{myDescripTag.familia}}"></ion-textarea>
+              </ion-item>
+
+              <p style="font-size: small; margin: 0; margin-left: 5%;  color:black; font-weight: 600; padding: 0;">Tratamiento ó Medida de Prevención</p>
+              <ion-item style="margin-bottom: 5%;">
+                <ion-textarea readonly style="min-height:70vh" value="{{myDescripTag.tratamiento}}" labelPlacement="stacked"></ion-textarea>
+              </ion-item>
+
+              
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+    </ion-card>
+   
+    <!-- [Agregar Etiqueta] -->
+    <p class="pasos" *ngIf="stepsProcess === 1 && !menu;">{{tokenExistentTag}} Etiqueta</p>
+    <ion-card class="pass1" *ngIf="stepsProcess === 1 && !menu;"> 
+    <!-- FORMULARIO-TAG-ZIP -->
+    <form [formGroup]="formGroup">
+      <ion-list style="padding: 0;">
+
+        <!-- INPUT-TAG -->
+        <ion-item [button]="true">
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            Ingrese Etiqueta
+            <ion-icon name="checkmark-circle-outline" style="color: rgb(9, 221, 9);" *ngIf="inputText"></ion-icon>
+          </ion-label>
+          <input formControlName="textZip"  class="inputs normalcheckInput" [ngClass]="{'checkInput': inputText,'notcheckInput': inputTextStyle}" type="text" [readonly]="readonlyExpandir()" (input)="onInput($event)">
+          
+          <!-- INPUT-TEXT -->
+          <ion-button *ngIf="tokenExistentTag == 'Agregar'" (click)="setOpenModalInfoTag(true)" class="inputInfo btnDescrip" color="none" [ngClass]="{'errorinputInfo': inputTextStyle && !msgError3, 'btnDescripError': controlerBtn, 'btnDescrip':!controlerBtn}">
+            <ion-icon slot="icon-only" style="font-size: large;" name="document-text-outline"></ion-icon>
+          </ion-button>
+
+          <!-- INPUT-TEXT Exp-->
+          <ion-button *ngIf="tokenExistentTag == 'Expandir'" (click)="setOpenModalInfoTagExp(true)" class="inputInfo Exp" [ngClass]="{'errorinputInfo': inputTextStyle && !msgError3}">
+            <ion-icon slot="icon-only" style="font-size: large;" name="document-text-outline"></ion-icon>
+          </ion-button>
+
+          <p *ngIf="this.tokenExistentTag == 'Agregar'" style="position: relative; font-size: small; margin-left:61%; margin-bottom: 0;">{{caracteres}}/10</p>
+          <p *ngIf="inputTextStyle && !msgError3" style="color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{msgError2}} <br>
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{msgErrorTag}} <br>
+            <ion-icon name="alert-circle-outline"></ion-icon> 
+            {{msgError}}
+          </p>
+          <p *ngIf="inputTextStyle && msgError3" style="color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+            <ion-icon name="alert-circle-outline"></ion-icon> 
+            {{msgError3}}
+          </p>
+        </ion-item> 
+
+
+        <!-- INPUT-ZIP -->
+        <ion-item [button]="true" style="margin-top: 1%;">
+          <ion-label position="stacked">
+            Ingrese Colleción .zip
+            <ion-icon name="checkmark-circle-outline" *ngIf="checkZip" style="color: rgb(9, 221, 9);"></ion-icon>
+          </ion-label>
+          <div class="content-p1">	
+            <label for="file-upload" class="custom-file-upload original-button" [ngClass]="{'inputZipStyle': inputZipStyle,'checkZip': checkZip}" style="border-radius: 8px;" >
+                Seleccionar Archivo.zip
+                <ion-icon name="folder-outline"></ion-icon>
+            </label>
+            <input id="file-upload" formControlName="fileZip" type="file" accept=".zip*" style="border: 1px solid black;" (change)="onFileZipSelected($event)">
+          </div>
+          <p *ngIf="inputZipStyle && !msgErrorZipMB" style="color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{msgErrorZip}} <br>
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{msgError}} <br>
+          </p>
+          <p *ngIf="inputZipStyle && msgErrorZipMB" style="color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{msgErrorZipMB}}
+          </p>
+        </ion-item>
+        
+      </ion-list>
+      <!-- FIN FORMULARIO-TAG-ZIP -->
+    </form>
+
+      <!-- [modalInfo. Etiqueta Agg] -->
+      <ion-modal *ngIf="tokenExistentTag == 'Agregar'" #modalInfo backdropDismiss="false" [isOpen]="btnOpenModalInfoTag" style="padding-top: 10%; padding-left: 5%; padding-right: 5%;">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar style="text-align: center;">
+              <ion-title style="font-size: medium;">Información de la Etiqueta</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+             
+            <span style="margin-left: 5%; display: block;">Tipo Deteccion</span>
+            <input style="margin-left: 5%;" [(ngModel)]="ObjApply.amenaza" type="radio" [value]="true" (ngModelChange)="onAmenazaChange($event)"> 
+            <p style="color: grey; display: inline-block; margin-bottom: 0;">Plaga / Hongo (Amenaza)</p><br>
+            <input style="margin-left: 5%;" [(ngModel)]="ObjApply.amenaza" type="radio" [value]="false" (ngModelChange)="onAmenazaChange($event)"> 
+            <p style="color: grey; display: inline-block;">Planta / Cultivo</p>
+
+            <ion-item>
+              <ion-textarea [(ngModel)]="ModalInfIA.definicion" label="Ingrese Definición ({{ObjApply.mode}})" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-textarea [(ngModel)]="ModalInfIA.familia" label="Ingrese Familia al cual pertenece ({{ObjApply.mode}})" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+
+            <ion-item *ngIf="ObjApply.amenaza">
+              <ion-textarea [(ngModel)]="ModalInfIA.tratamiento" label="Tratamiento ó Medida de Prevención" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+
+            <p *ngIf="errorInputTextModal" style="margin-top: 8%; color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+              <ion-icon name="alert-circle-outline"></ion-icon> 
+              Sin Campos Vacios
+            </p>
+
+            <div style="text-align: center; margin-top: 5%;"  (click)="InputTextModal(modalInfo); controlerBtn = false">
+              <ion-button fill="solid" color="tertiary" expand="block">Confirmar</ion-button>
+            </div>
+
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <!-- [modalInfo. Etiqueta Exp] -->
+      <ion-modal *ngIf="tokenExistentTag == 'Expandir'" #modalInfoExp backdropDismiss="false" [isOpen]="btnOpenModalInfoTagExp" style="padding-top: 10%; padding-left: 5%; padding-right: 5%; border: 1px solid rgb(18, 18, 18);">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar style="text-align: center;">
+              <ion-title style="font-size: medium;">Información de la Etiqueta</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            
+            <span style="margin-left: 5%; display: block;">Tipo Deteccion</span>
+            <input style="margin-left: 5%;" [(ngModel)]="myDescripTag.amenaza" type="radio" [value]="true" (ngModelChange)="onAmenazaChangeUpdate($event)"> 
+            <p style="color: grey; display: inline-block; margin-bottom: 0;">Plaga / Hongo (Amenaza)</p><br>
+            <input style="margin-left: 5%;" [(ngModel)]="myDescripTag.amenaza" type="radio" [value]="false" (ngModelChange)="onAmenazaChangeUpdate($event)"> 
+            <p style="color: grey; display: inline-block;">Planta / Cultivo</p>
+
+
+            
+            <ion-item>
+              <ion-textarea [(ngModel)]="myDescripTag.definicion" label="Definición ({{myDescripTag.mode}})" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-textarea [(ngModel)]="myDescripTag.familia" label="Ingrese Familia al cual pertenece ({{myDescripTag.mode}})" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+
+            <ion-item *ngIf="myDescripTag.amenaza">
+              <ion-textarea [(ngModel)]="myDescripTag.tratamiento" label="Tratamiento ó Medida de Prevención" [autoGrow]="true" labelPlacement="stacked"></ion-textarea>
+            </ion-item>
+
+            <p *ngIf="errorInputTextModalExp" style="margin-top: 8%; color: red; margin-bottom: 0; margin-bottom: 2%; font-size: small;">
+              <ion-icon name="alert-circle-outline"></ion-icon> 
+              Sin Campos Vacios
+            </p>
+
+            <div style="text-align: center; margin-top: 5%;"  (click)="InputTextModalExp(modalInfoExp)">
+              <ion-button fill="solid" color="tertiary" expand="block">Confirmar</ion-button>
+            </div>
+
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      
+
+    </ion-card>
+
+    
+
+    <!-- [Agregar Etiqueta] <Process> -->
+    <p class="pasos" *ngIf="tokenExistentTag == 'Agregar' && successConfirm">Agregando Etiqueta...</p>
+    <ion-card class="pass1" *ngIf="tokenExistentTag == 'Agregar' && successConfirm"> 
+      <ion-list style=" margin-bottom: 1vh;">
+        <ion-item [button]="false">
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression1" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression1" role="status"></div>
+            Subiendo Arch.Zip
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression2" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression2 && expression1" role="status"></div>
+            Creando Carpetas
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression3" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression3 && expression2" role="status"></div>
+            Descomprimiendo
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression4" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression4 && expression3" role="status"></div>
+            Distribuyendo
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression5" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression5 && expression4" role="status"></div>
+            Limpiando Carpetas
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression6" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression6 && expression5" role="status"></div>
+            Preparando Modelo
+          </ion-label>
+
+        </ion-item> 
+      </ion-list>
+    </ion-card>
+
+    <!-- [Expandir Etiqueta] <Process> -->
+    <p class="pasos" *ngIf="tokenExistentTag == 'Expandir' && successConfirm">Expandiendo Etiqueta...</p>
+    <ion-card class="pass1" *ngIf="tokenExistentTag == 'Expandir' && successConfirm"> 
+        <ion-list style=" margin-bottom: 1vh;">
+          <ion-item [button]="false">
+  
+            <ion-label position="stacked" style="margin-bottom: 2%;">
+              <ion-icon name="checkmark-circle-outline" *ngIf="expression1" style="color: rgb(9, 221, 9);"></ion-icon>
+              <div class="spinner-grow spinner-grow-sm" *ngIf="!expression1" role="status"></div>
+              Subiendo Archivo.Zip
+            </ion-label>
+  
+            <ion-label position="stacked" style="margin-bottom: 2%;">
+              <ion-icon name="checkmark-circle-outline" *ngIf="ExpanExpression2" style="color: rgb(9, 221, 9);"></ion-icon>
+              <div class="spinner-grow spinner-grow-sm" *ngIf="!ExpanExpression2 && expression1" role="status"></div>
+              Descomprimiendo
+            </ion-label>
+  
+            <ion-label position="stacked" style="margin-bottom: 2%;">
+              <ion-icon name="checkmark-circle-outline" *ngIf="ExpanExpression3" style="color: rgb(9, 221, 9);"></ion-icon>
+              <div class="spinner-grow spinner-grow-sm" *ngIf="!ExpanExpression3 && ExpanExpression2" role="status"></div>
+              Completado
+            </ion-label>
+  
+          </ion-item> 
+        </ion-list>
+    </ion-card>
+
+    <!-- [Entrenando] <Process> -->
+    <p class="pasos" *ngIf="menu=='trainTag'" style="display: inline-block; margin-right: 0%; margin-bottom: 0;">
+      Entrenando...    
+    </p>
+    <ion-icon *ngIf="menu=='trainTag'" name="hourglass-outline" style="color: blue;"></ion-icon>
+    
+    <p *ngIf="menu=='trainTag'" style="display: inline-block; font-weight: 400; margin-bottom: 0; color: black;">
+       {{ultimateTimeModel}} /  
+    </p>
+    <p *ngIf="menu=='trainTag'" style="display: inline-block; margin-bottom: 0; font-weight: 600; color: rgb(12, 12, 12);">
+      {{formattedTime}}
+    </p>
+    <ion-card class="pass1" *ngIf="menu=='trainTag'"> 
+      <ion-list style=" margin-bottom: 1vh;">
+        <ion-item [button]="false">
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression7" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression7" role="status"></div>
+            Entrenando Modelo
+          </ion-label>
+
+          <ion-label position="stacked" style="margin-bottom: 2%;">
+            <ion-icon name="checkmark-circle-outline" *ngIf="expression8" style="color: rgb(9, 221, 9);"></ion-icon>
+            <div class="spinner-grow spinner-grow-sm" *ngIf="!expression8 && expression7" role="status"></div>
+            Modelo Completado
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <!-- Modal VerifyAPI -->
+    <ion-modal [isOpen]="isModalOpenAPI" class="modalDown" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="handleModalDismiss()">
+      <ng-template>
+      <div class="block">
+          <img src="../assets/errors/not_wifi.svg" style="width: 40%; height: 40%; margin-bottom: 5%;">
+          <p style="display: inline-block; font-size: xx-large;">Error de Conexión</p><br>
+          <p style="display: inline-block; font-size: medium;">Verifique su Conexión al Servidor</p>  
+      </div>
+      </ng-template>
+    </ion-modal>
+    <!-- VerifyAPI Modal -->
+
+
+</ion-card> 
+   
+  
+  <!-- BOTTONS Mis-Tags -->
+<div class="buttonTag" *ngIf="menu=='listTag'">
+  <ion-button color="light" (click)="cancelarMenu()" style="width: 50%;">
+    <ion-icon name="return-up-back-outline" style="margin-bottom: 1%;"></ion-icon> 
+    Ir Atras
+  </ion-button>
+  <ion-button (click)="addTagMenu()" style="width: 50%;" color="success">
+    Agregar 
+    <ion-icon name="add-sharp"></ion-icon>
+  </ion-button>
+</div>
+
+  <!-- BOTTONS Agregar-Tag -->
+<div class="buttonTag">
+  <ion-button color="light" *ngIf="stepsProcess === 1 && !menu" (click)="cancelarAddTagg()" style="width: 50%;" [disabled]="isDisabledPosicZip">
+    Cancelar
+  </ion-button>
+  <ion-button class="primary" *ngIf="stepsProcess === 1 && !menu" [color]="tokenExistentTag == 'Expandir' ? 'primary' : 'success'" (click)="onSubmit()" [disabled]="isDisabledPosicZip">
+    {{tokenExistentTag}} 
+    <ion-icon name="checkmark-circle-outline" style="margin-bottom: 2%"></ion-icon>
+    <div *ngIf="spinnerZip" class="spinner-border text-dark" style="size: 2%;" role="status" >
+        <span class="visually-hidden" style="font-size: 5%;"></span>
+    </div>
+  </ion-button> 
+</div>
+
+  <!-- BOTTONS Entrenar -->
+<div class="buttonTagTrain">
+  <ion-button color="light" *ngIf="menu=='trainTag' && rectificadorEntrenamiento" (click)="cancelarEntren(); resetTimer()" style="width: 100%;">
+    Cancelar
+  </ion-button>
+</div>
+  

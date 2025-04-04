@@ -1,0 +1,361 @@
+
+<ion-segment value="default">
+  <ion-segment-button (click)="CambioPag()" value="default">
+    <ion-label style="font-size: small;">Sin Cosechar</ion-label>
+  </ion-segment-button>
+  <ion-segment-button (click)="CambioPag2()">
+    <ion-label style="font-size: small;">Cosechados</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-card *ngIf="pagSinCosechar" style="height: 100%; ">  
+
+    <!-- Mesagge-Actions -->
+    <div class="alert succesAlert" style="background-color: #28a745;" [ngStyle]="{'background-color': deleteNot}" role="alert" *ngIf="msj_act">
+      <strong style="font-size:small;"> {{ msj_act }} </strong> 
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </div>
+    <!-- Fin Mesagge-Actions -->
+
+    <ion-content style="background-color: #0000005a;">
+        <ion-card class="cardGeneral"> 
+        <!-- MIGAS-PAN -->
+        <!-- <ion-breadcrumbs> 
+            <ion-breadcrumb style="font-size: x-small;">
+                Cultivos
+                <ion-icon slot="end" name="leaf" style="font-size: x-small"></ion-icon>
+            </ion-breadcrumb>
+        </ion-breadcrumbs>     -->
+        <!-- FIN-MIGAS-PAN -->
+
+        <!-- TITLE -->
+        <ion-card-header class="cardTitle">
+            <ion-card-title class="titleG">Listado Cultivos</ion-card-title>
+        </ion-card-header>
+        <!-- FIN-TITLE -->
+
+        <!-- List -->
+        <ion-card style="margin-left: 7.5%; margin-right: 7.5%; ">
+            <!-- <ion-list [inset]="true" style="margin-top: 0px;"><br> -->
+            <ion-item *ngFor="let listCultPlag of listCultPlags">
+                    <ion-label style="font-size: small;">{{listCultPlag.nombre}} - {{listCultPlag.espacio}}</ion-label>
+
+                    <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="light" (click)="fetchupdateCultivoPlaga(listCultPlag.ID)" id="open-modal-history-{{listCultPlag.ID}}">
+                        <img style="font-size: 2%;" src="../../../assets/icon/history.256x227.png">
+                    </ion-button>
+                     <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="success" id="open-modal-view-{{listCultPlag.iterador}}">
+                        <ion-icon name="eye" slot="icon-only"></ion-icon>
+                    </ion-button>
+                    <ion-button *ngIf="PrivMyPerfil.editar" size="small" color="warning" id="open-modal-edit-{{listCultPlag.iterador}}">
+                        <ion-icon name="create-sharp" slot="icon-only"></ion-icon>
+                    </ion-button>
+            
+                    <!-- Modal History -->
+                    <ion-modal #modalV backdropDismiss="true" trigger="open-modal-history-{{listCultPlag.ID}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar style="text-align: center;">
+                            <ion-title style="font-size:large; margin-left: 10%;">Historial Cultivo</ion-title>
+                            <ion-buttons slot="end">
+                                <ion-button color="light" (click)="modalV.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+                            </ion-buttons>
+                            </ion-toolbar>
+                            <ion-list style="padding-top: 0;">
+                                <ion-item>
+                                    <ion-label>
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlag.nombre}} - {{listCultPlag.espacio}}</p>
+
+                                        <th style="display: inline-block; font-weight: 200; font-weight: 600;">Registro de Diagnosticos:</th>
+                                    
+                                        <br>
+
+                                        <div style="color: gray; margin-left: 0%; justify-content: space-between;" *ngFor="let historiCultivo of historiCultivos">
+                                            <td style="display: inline-block;"> {{ historiCultivo.nombre_plaga }} </td>   
+                                            <td style="display: inline-block;"> {{ historiCultivo.fecha_ultima_deteccion }} </td>   
+                                        </div>
+                                        
+                                    </ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal History -->
+
+                    <!-- Modal View -->
+                    <ion-modal #modalVI backdropDismiss="true" trigger="open-modal-view-{{listCultPlag.iterador}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar style="text-align: center;">
+                            <ion-title style="font-size:large; margin-left: 10%;">Detalles Cultivo</ion-title>
+                            <ion-buttons slot="end">
+                                <ion-button color="light" (click)="modalVI.dismiss()">
+                                    <ion-icon name="close"></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                            </ion-toolbar>
+                            <ion-list style="padding-top: 0;">
+                                <ion-item>
+                                    <ion-label>
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlag.nombre}} - {{listCultPlag.espacio}}</p>
+                                    <span style="font-weight: 600;">Tipo Cultivo:</span>
+                                    <p>{{listCultPlag.tipo}}</p>
+
+                                    <span style="display: block; font-weight: 600;">Diagnóstico del Cultivo:</span>
+                                    <p *ngIf="listCultPlag.nombre_plaga" style="display: inline-block;">{{listCultPlag.nombre_plaga}}</p>
+                                    <p *ngIf="!listCultPlag.nombre_plaga" style="display: inline-block;">Sin Registros</p>
+
+                                    <br><span style="font-weight: 600;">fecha Ultima Deteccion:</span>
+                                    <p *ngIf="listCultPlag.fecha_ultima_deteccion && listCultPlag.fecha_ultima_deteccion !== 'NaN/NaN/NaN'">
+                                      {{ listCultPlag.fecha_ultima_deteccion }}
+                                    </p>
+                                    <p *ngIf="!listCultPlag.fecha_ultima_deteccion || listCultPlag.fecha_ultima_deteccion === 'NaN/NaN/NaN'">
+                                      Sin registros
+                                    </p>
+                                    
+                                    </ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal View -->
+                
+                    <!-- Modal Edit -->
+                    <ion-modal #modalE backdropDismiss="false" trigger="open-modal-edit-{{listCultPlag.iterador}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar slot="fixed" style="text-align: center;">
+                            <ion-title style="font-size:large;">Editar Cultivo</ion-title>
+                            <!-- <ion-buttons slot="end"> -->
+                                <!-- <ion-button color="light" (click)="modalE.dismiss()"><ion-icon name="close"></ion-icon></ion-button> -->
+                            <!-- </ion-buttons> -->
+                            </ion-toolbar>  
+                
+                            <ion-list [inset]="true" style="margin: 0; margin-bottom: 1vh; padding: 2%; padding-bottom: 0; margin-top: 9vh; border-bottom: 1px solid rgb(0, 4, 255);">
+                            
+                                <ion-item>
+                                    <ion-label style="margin-bottom: 0;"> 
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlag.nombre}} - {{listCultPlag.espacio}}</p>
+    
+                                    <span style="display: block; font-weight: 600;">Diagnóstico del Cultivo:</span>
+                                    <p style="display: inline; font-weight: 500;">*Ultimo Diagnóstico: </p>
+                                    <p style="display: inline-block; color: black; margin: 0;">{{listCultPlag.nombre_plaga}}</p>
+                                    
+                                    <input pattern="[a-zA-Z0-9]+" style="display: inline-block;" [ngStyle]="{ 'border-color': error_name_plaga ? 'red' : '' ,'color': name_plaga == 'Sin Plagas' ? 'green' : ''}" [(ngModel)]="name_plaga"  type="text" placeholder="Ingrese Nombre Plaga">
+                                    <br><br>
+                                    
+                                    <span style="font-weight: 600;">fecha Ultimo Registro:</span>
+                                    <p *ngIf="listCultPlag.fecha_ultima_deteccion && listCultPlag.fecha_ultima_deteccion !== 'NaN/NaN/NaN'">
+                                      {{ listCultPlag.fecha_ultima_deteccion }}
+                                    </p>
+                                    <p *ngIf="!listCultPlag.fecha_ultima_deteccion || listCultPlag.fecha_ultima_deteccion === 'NaN/NaN/NaN'">
+                                      Sin registros
+                                    </p>
+                                    </ion-label>
+                                </ion-item>
+                            
+                            </ion-list>
+                            <div style="text-align: center;">
+                            <ion-button fill="outline" (click)="modalE.dismiss(); resetInput();">Cancelar</ion-button>
+                            <ion-button (click)="plaga_update(modalE, listCultPlag.ID);">Confirmar</ion-button>
+                            </div>
+                
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal Edit -->
+            
+            </ion-item>
+            <!-- </ion-list> -->
+        </ion-card>
+        
+            <!-- Modal VerifyAPI -->
+    <ion-modal [isOpen]="isModalOpenAPI" class="modalDown" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="handleModalDismiss()">
+        <ng-template>
+        <div class="block">
+            <img src="../assets/errors/not_wifi.svg" style="width: 40%; height: 40%; margin-bottom: 5%;">
+            <p style="display: inline-block; font-size: xx-large;">Error de Conexión</p><br>
+            <p style="display: inline-block; font-size: medium;">Verifique su Conexión al Servidor</p>  
+        </div>
+        </ng-template>
+      </ion-modal>
+      <!-- VerifyAPI Modal -->
+
+        </ion-card>
+    </ion-content>
+</ion-card>  
+
+<ion-card *ngIf="pagCosechados" style="height: 100%; ">  
+
+    <ion-content style="background-color: #0000005a;">
+        <ion-card class="cardGeneral"> 
+        <!-- MIGAS-PAN -->
+        <!-- <ion-breadcrumbs> 
+            <ion-breadcrumb style="font-size: x-small;">
+                Cultivos
+                <ion-icon slot="end" name="leaf" style="font-size: x-small"></ion-icon>
+            </ion-breadcrumb>
+        </ion-breadcrumbs>     -->
+        <!-- FIN-MIGAS-PAN -->
+
+        <!-- TITLE -->
+        <ion-card-header class="cardTitle">
+            <ion-card-title class="titleG">Listado Cultivos</ion-card-title>
+        </ion-card-header>
+        <!-- FIN-TITLE -->
+
+        <!-- List -->
+        <ion-card style="margin-left: 7.5%; margin-right: 7.5%; ">
+            <!-- <ion-list [inset]="true" style="margin-top: 0px;"><br> -->
+            <ion-item *ngFor="let listCultPlagCosechado of listCultPlagsCosechado">
+                    <ion-label style="font-size: small;">{{listCultPlagCosechado.nombre}} - {{listCultPlagCosechado.espacio}}</ion-label>
+
+                    <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="light" (click)="fetchupdateCultivoPlaga(listCultPlagCosechado.ID)" id="open-modal-history-{{listCultPlagCosechado.ID}}">
+                        <img style="font-size: 2%;" src="../../../assets/icon/history.256x227.png">
+                    </ion-button>
+                     <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="success" id="open-modal-view-{{listCultPlagCosechado.iterador}}">
+                        <ion-icon name="eye" slot="icon-only"></ion-icon>
+                    </ion-button>
+            
+                    <!-- Modal History -->
+                    <ion-modal #modalV backdropDismiss="true" trigger="open-modal-history-{{listCultPlagCosechado.ID}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar style="text-align: center;">
+                            <ion-title style="font-size:large; margin-left: 10%;">Historial Cultivo</ion-title>
+                            <ion-buttons slot="end">
+                                <ion-button color="light" (click)="modalV.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+                            </ion-buttons>
+                            </ion-toolbar>
+                            <ion-list style="padding-top: 0;">
+                                <ion-item>
+                                    <ion-label>
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlagCosechado.nombre}} - {{listCultPlagCosechado.espacio}}</p>
+
+                                        <th style="display: inline-block; font-weight: 200; font-weight: 600;">Registro de Diagnosticos:</th>
+                                    
+                                        <br>
+
+                                        <div style="color: gray; margin-left: 0%; justify-content: space-between;" *ngFor="let historiCultivo of historiCultivos">
+                                            <td style="display: inline-block;"> {{ historiCultivo.nombre_plaga }} </td>   
+                                            <td style="display: inline-block;"> {{ historiCultivo.fecha_ultima_deteccion }} </td>   
+                                        </div>
+                                        
+                                    </ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal History -->
+
+                    <!-- Modal View -->
+                    <ion-modal #modalVI backdropDismiss="true" trigger="open-modal-view-{{listCultPlagCosechado.iterador}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar style="text-align: center;">
+                            <ion-title style="font-size:large; margin-left: 10%;">Detalles Cultivo</ion-title>
+                            <ion-buttons slot="end">
+                                <ion-button color="light" (click)="modalVI.dismiss()">
+                                    <ion-icon name="close"></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                            </ion-toolbar>
+                            <ion-list style="padding-top: 0;">
+                                <ion-item>
+                                    <ion-label>
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlagCosechado.nombre}} - {{listCultPlagCosechado.espacio}}</p>
+                                    <span style="font-weight: 600;">Tipo Cultivo:</span>
+                                    <p>{{listCultPlagCosechado.tipo}}</p>
+
+                                    <span style="display: block; font-weight: 600;">Diagnóstico del Cultivo:</span>
+                                    <p *ngIf="listCultPlagCosechado.nombre_plaga" style="display: inline-block;">{{listCultPlagCosechado.nombre_plaga}}</p>
+                                    <p *ngIf="!listCultPlagCosechado.nombre_plaga" style="display: inline-block;">Sin Registros</p>
+
+                                    <br><span style="font-weight: 600;">fecha Ultima Deteccion:</span>
+                                    <p *ngIf="listCultPlagCosechado.fecha_ultima_deteccion && listCultPlagCosechado.fecha_ultima_deteccion !== 'NaN/NaN/NaN'">
+                                      {{ listCultPlagCosechado.fecha_ultima_deteccion }}
+                                    </p>
+                                    <p *ngIf="!listCultPlagCosechado.fecha_ultima_deteccion || listCultPlagCosechado.fecha_ultima_deteccion === 'NaN/NaN/NaN'">
+                                      Sin registros
+                                    </p>
+                                    
+                                    </ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal View -->
+                
+                    <!-- Modal Edit -->
+                    <ion-modal #modalE backdropDismiss="false" trigger="open-modal-edit-{{listCultPlagCosechado.iterador}}">
+                        <ng-template>
+                        <ion-content>
+                            <ion-toolbar slot="fixed" style="text-align: center;">
+                            <ion-title style="font-size:large;">Editar Cultivo</ion-title>
+                            <!-- <ion-buttons slot="end"> -->
+                                <!-- <ion-button color="light" (click)="modalE.dismiss()"><ion-icon name="close"></ion-icon></ion-button> -->
+                            <!-- </ion-buttons> -->
+                            </ion-toolbar>  
+                
+                            <ion-list [inset]="true" style="margin: 0; margin-bottom: 1vh; padding: 2%; padding-bottom: 0; margin-top: 9vh; border-bottom: 1px solid rgb(0, 4, 255);">
+                            
+                                <ion-item>
+                                    <ion-label style="margin-bottom: 0;"> 
+                                    <span style="font-weight: 600;">Nombre - Espacio:</span>
+                                    <p>{{listCultPlagCosechado.nombre}} - {{listCultPlagCosechado.espacio}}</p>
+    
+                                    <span style="display: block; font-weight: 600;">Diagnóstico del Cultivo:</span>
+                                    <p style="display: inline; font-weight: 500;">*Ultimo Diagnóstico: </p>
+                                    <p style="display: inline-block; color: black; margin: 0;">{{listCultPlagCosechado.nombre_plaga}}</p>
+                                    
+                                    <input pattern="[a-zA-Z0-9]+" style="display: inline-block;" [ngStyle]="{ 'border-color': error_name_plaga ? 'red' : '' ,'color': name_plaga == 'Sin Plagas' ? 'green' : ''}" [(ngModel)]="name_plaga"  type="text" placeholder="Ingrese Nombre Plaga">
+                                    <br><br>
+                                    
+                                    <span style="font-weight: 600;">fecha Ultimo Registro:</span>
+                                    <p *ngIf="listCultPlagCosechado.fecha_ultima_deteccion && listCultPlagCosechado.fecha_ultima_deteccion !== 'NaN/NaN/NaN'">
+                                      {{ listCultPlagCosechado.fecha_ultima_deteccion }}
+                                    </p>
+                                    <p *ngIf="!listCultPlagCosechado.fecha_ultima_deteccion || listCultPlagCosechado.fecha_ultima_deteccion === 'NaN/NaN/NaN'">
+                                      Sin registros
+                                    </p>
+                                    </ion-label>
+                                </ion-item>
+                            
+                            </ion-list>
+                            <div style="text-align: center;">
+                            <ion-button fill="outline" (click)="modalE.dismiss(); resetInput();">Cancelar</ion-button>
+                            <ion-button (click)="plaga_update(modalE, listCultPlagCosechado.ID);">Confirmar</ion-button>
+                            </div>
+                
+                        </ion-content>
+                        </ng-template>
+                    </ion-modal>
+                    <!-- Modal Edit -->
+            
+            </ion-item>
+            <!-- </ion-list> -->
+        </ion-card>
+        
+            <!-- Modal VerifyAPI -->
+    <ion-modal [isOpen]="isModalOpenAPI" class="modalDown" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="handleModalDismiss()">
+        <ng-template>
+        <div class="block">
+            <img src="../assets/errors/not_wifi.svg" style="width: 40%; height: 40%; margin-bottom: 5%;">
+            <p style="display: inline-block; font-size: xx-large;">Error de Conexión</p><br>
+            <p style="display: inline-block; font-size: medium;">Verifique su Conexión al Servidor</p>  
+        </div>
+        </ng-template>
+      </ion-modal>
+      <!-- VerifyAPI Modal -->
+
+        </ion-card>
+    </ion-content>
+</ion-card>  

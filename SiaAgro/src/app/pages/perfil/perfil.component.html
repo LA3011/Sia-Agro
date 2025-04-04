@@ -1,0 +1,569 @@
+<ion-segment value="default">
+  <ion-segment-button (click)="CambioPag()" value="default">
+    <ion-label>Usuarios</ion-label>
+  </ion-segment-button>
+  <ion-segment-button (click)="CambioPag2()" value="segment">
+    <ion-label>Perfiles</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+
+
+<!-- Content Pagina Perfil -->
+<ion-card *ngIf="pagPerfil" style="height: 100%; ">  
+  <!-- Mesagge-Actions -->
+  <div class="alert succesAlert" [ngStyle]="{'background-color': deleteNot}" role="alert" *ngIf="msj_act">
+    <strong style="font-size:small;"> {{ msj_act }} </strong> 
+    <ion-icon *ngIf="!deleteNot" name="checkmark-circle-outline"></ion-icon>
+    <ion-icon *ngIf="deleteNot" name="warning-outline"></ion-icon>
+  </div>
+  <!-- Fin Mesagge-Actions -->
+
+  <!-- Title -->
+  <ion-card-header style="text-align: center;">
+    <ion-card-title class="title">Listado Perfiles</ion-card-title>
+  </ion-card-header>
+  <!-- Fin Title -->
+
+  <ion-list [inset]="true" style="margin-top: 0px; margin-bottom: 0; padding-bottom: 0;">
+    <!-- Boton Agregar -->
+    <ion-button *ngIf="PrivMyPerfil.agregar" size="default" id="open-modal-add">
+      Agregar Perfil
+      <ion-icon name="add-sharp"></ion-icon>
+    </ion-button>
+    <!-- Modal Add -->
+    <ion-modal *ngIf="PrivMyPerfil.agregar" #modalA trigger="open-modal-add">
+      <ng-template>
+        <ion-content>
+          <ion-toolbar style="text-align: center;">
+            <ion-title>Agregar Perfil</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="light" (click)="modalA.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+            </ion-buttons>
+            </ion-toolbar>
+              <ion-list class="listAgg" style="padding: 8%;">
+                
+                <!-- Nombre Perfil -->
+                <ion-label position="stacked" style="font-weight:bolder; left: 10%;">Ingrese Nombre Perfil</ion-label>
+                <ion-item [button]="true" style="border-bottom: 1.5px solid rgba(0, 0, 255, 0.8); margin: 0; margin-bottom: 5%; padding: 0;">
+                  <ion-input  [(ngModel)]="nombre_perfil" placeholder="Ej: Administrador" required="required"></ion-input>
+                </ion-item>
+                <!-- Nombre Perfil -->
+
+                <!-- Privilegios -->
+                <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Privilegios</ion-label><br><br>
+                <div style="margin: 0; padding: 0; text-align: center;">
+                  <input type="checkbox" [checked]="ver" [(ngModel)]="ver">
+                  <p style="display: inline-block;">  Ver</p>  
+                  <input type="checkbox" [checked]="editar" [(ngModel)]="editar">
+                  <p style="display: inline-block;">  Editar</p>  
+                  <input type="checkbox" [checked]="eliminar" [(ngModel)]="eliminar">
+                  <p style="display: inline-block;">  Eliminar</p>  <br>
+                  <input type="checkbox" [checked]="imprimir" [(ngModel)]="imprimir">
+                  <p style="display: inline-block;">  Imprimir</p>  
+                  <input type="checkbox" [checked]="agregar" [(ngModel)]="agregar">
+                  <p style="display: inline-block;">  Agregar</p><br><br>
+                </div>
+                <!-- Privilegios -->
+                
+                <!-- Accesibilidad -->
+                <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Accesos (Opciones)</ion-label><br>
+                <input style="margin-top: 7%;" type="checkbox" [checked]="programasAll" [(ngModel)]="programas" (click)="allOpcion()">
+                <p style="display: inline-block; margin: 0;">  Todas Las Opciones</p><br>
+
+                <div style="border: 1px solid rgba(0, 0, 0, 0); padding: 5%; margin: 0;">
+                  <input type="checkbox" [checked]="programas" [(ngModel)]="animales">
+                  <p style="display: inline-block;">  Animales</p><br>
+                  <input type="checkbox" [checked]="programas" [(ngModel)]="cultivos">
+                  <p style="display: inline-block;">  Cultivos</p><br>
+                  <input type="checkbox" [checked]="programas" [(ngModel)]="usuarios">
+                  <p style="display: inline-block;">  Usuarios</p><br>
+                  <input type="checkbox" [checked]="programas" [(ngModel)]="ia">
+                  <p style="display: inline-block; margin: 0;">  I.A.</p><br>
+                  <div style="padding: 5%; margin: 0;">
+                    <input type="checkbox" [checked]="programas" [(ngModel)]="detector">
+                    <p style="display: inline-block;">  Detector</p><br>
+                    <input type="checkbox" [checked]="programas" [(ngModel)]="modelo">
+                    <p style="display: inline-block;">  Modelos</p><br>
+                  </div>
+                </div>
+                <!-- Accesibilidad -->
+
+              </ion-list>
+
+              <!-- Mensajes de Validacion -->
+              <div style="padding-left: 20%; margin-bottom: 5%;">
+                <p *ngIf="msj_Error.statePrv" style="margin:0; color: red; font-size: small;">
+                  <ion-icon name="alert-circle-outline"></ion-icon> 
+                  {{msj_Error.MensajePrv}}
+                </p>
+                <p *ngIf="msj_Error.state" style="margin:0; color: red; font-size: small;">
+                  <ion-icon name="alert-circle-outline"></ion-icon> 
+                  {{msj_Error.Mensaje}}
+                </p>
+                <p *ngIf="msj_Error.stateOpc" style="margin:0; color: red; font-size: small;">
+                  <ion-icon name="alert-circle-outline"></ion-icon> 
+                  {{msj_Error.MensajeOpc}}
+                </p>
+              </div>
+              <!-- Mensajes de Validacion -->
+
+            <!-- Opciones -->
+            <div style="text-align: center;">
+              <ion-button fill="outline" (click)="modalA.dismiss()">Cancelar</ion-button>
+              <ion-button (click)="agregarPefil(modalA)">Confirmar</ion-button>
+            </div>
+            <!-- Opciones -->
+
+        </ion-content>
+      </ng-template>
+    </ion-modal><br>
+  </ion-list>
+
+  <!-- List -->
+  <ion-card style="display: inline-block; overflow-y: auto; max-height: 60%; height: 80%; width: 83%; margin-left: 8%;">
+    <ion-list [inset]="true" style="margin-left: 1%; margin-top: 0;">
+      <ion-item *ngFor="let perfil of perfiles">
+        <ion-label style="display: inline-block; font-size: small;">{{ perfil.nombre_perfil }}</ion-label>
+        
+        <!-- Opciones Registros -->
+        <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="success" id="open-modal-view-{{perfil.id_perfil}}" (click)="cargarDataPerfil(perfil.id_perfil)">
+          <ion-icon name="eye" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="PrivMyPerfil.editar" size="small" color="warning" id="open-modal-editP-{{perfil.id_perfil}}" (click)="cargarDataPerfil(perfil.id_perfil)">
+          <ion-icon name="create-sharp" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="PrivMyPerfil.eliminar" size="small" color="danger" id="open-modal-delete-{{perfil.id_perfil}}">
+          <ion-icon name="trash" slot="icon-only"></ion-icon>
+        </ion-button>
+        <!-- Opciones Registros -->
+
+      <!-- Modal View -->
+      <ion-modal *ngIf="PrivMyPerfil.ver" #modalAPerfilView trigger="open-modal-view-{{perfil.id_perfil}}">
+        <ng-template>
+          <ion-content>
+            <ion-toolbar style="text-align: center;">
+              <ion-title>Vizualizar Perfil</ion-title>
+              <ion-buttons slot="end">
+                <ion-button color="light" (click)="modalAPerfilView.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+              </ion-toolbar>
+                <ion-list class="listAgg" style="padding: 8%;">
+                  
+                  <!-- Nombre Perfil -->
+                  <ion-label position="stacked" style="font-weight:bolder; left: 10%;">Nombre Perfil</ion-label>
+                    <ion-item [button]="true" style="border-bottom: 1.5px solid rgba(0, 0, 255, 0.8); margin: 0; margin-bottom: 5%; padding: 0;">
+                    <ion-input readonly style="cursor: none;" value="{{perfil.nombre_perfil}}"></ion-input>
+                  </ion-item>
+                  <!-- Nombre Perfil -->
+
+                  <!-- List Perfil X Usuario -->
+                  <ion-label position="stacked" style="font-weight:bolder; margin-bottom: 5%; position: relative;">Usuarios Asociados Perfil</ion-label>
+                  <ion-item [button]="true" style="border-bottom: 1.5px solid rgba(0, 0, 255, 0.89); margin: 0; padding: 0;">
+                    <ion-select  [multiple]="true" placeholder="Listado Usuarios Asociados">
+                      <ion-select-option style="cursor: none;" *ngFor="let userForPer of userForPerfil">{{ userForPer.Usuario }}</ion-select-option>
+                    </ion-select>
+                  </ion-item><br>
+                  <!-- List Perfil X Usuario -->
+  
+
+                  <!-- Privilegios  -->
+                  <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Privilegios</ion-label><br><br>
+                  <div style="margin: 0; padding: 0; text-align: center;">
+                    <input class="disabled-checkbox" type="checkbox" [checked]="userForPrivilegio.ver == 'true'" >
+                    <p style="display: inline-block;">  Ver</p>  
+                    <input class="disabled-checkbox" type="checkbox" [checked]="userForPrivilegio.editar == 'true'">
+                    <p style="display: inline-block;">  Editar</p>  
+                    <input class="disabled-checkbox" type="checkbox" [checked]="userForPrivilegio.eliminar == 'true'">
+                    <p style="display: inline-block;">  Eliminar</p>  <br>
+                    <input class="disabled-checkbox" type="checkbox" [checked]="userForPrivilegio.imprimir == 'true'">
+                    <p style="display: inline-block;">  Imprimir</p>  
+                    <input class="disabled-checkbox" type="checkbox" [checked]="userForPrivilegio.agregar == 'true'">
+                    <p style="display: inline-block;">  Agregar</p><br><br>
+                  </div>
+                  <!-- Privilegios  -->
+
+                  
+                  <!-- Accesos  -->
+                  <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Accesos (Opciones)</ion-label><br>
+                  <input class="disabled-checkbox" style="margin-top: 7%;" type="checkbox" [checked]="programasAll" [(ngModel)]="programas" (click)="allOpcion()">
+                  <p style="display: inline-block; margin: 0;">  Todas Las Opciones</p><br>
+                  <div style="border: 1px solid rgba(0, 0, 0, 0); padding: 5%; margin: 0;">
+                    <input class="disabled-checkbox" type="checkbox" [checked]="AccAnimales">
+                    <p style="display: inline-block;">  Animales</p><br>
+                    <input class="disabled-checkbox" type="checkbox" [checked]="AccCultivos">
+                    <p style="display: inline-block;">  Cultivos</p><br>
+                    <input class="disabled-checkbox" type="checkbox" [checked]="AccUsuarios">
+                    <p style="display: inline-block;">  Usuarios</p><br>
+                    <input class="disabled-checkbox" type="checkbox" [checked]="AccIA">
+                    <p style="display: inline-block; margin: 0;">  I.A.</p><br>
+                    <div style="padding: 5%; margin: 0;">
+                      <input class="disabled-checkbox" type="checkbox" [checked]="AccDetector">
+                      <p style="display: inline-block;">  Detector</p><br>
+                      <input class="disabled-checkbox" type="checkbox" [checked]="AccModelos">
+                      <p style="display: inline-block;">  Modelos</p><br>
+                    </div>
+                  </div>
+                  <!-- Accesos  -->
+  
+                </ion-list>
+              <div style="text-align: center;">
+              <!-- opcion -->
+              <ion-button fill="outline" (click)="modalAPerfilView.dismiss()">Cancelar</ion-button>
+              <!-- opcion -->
+
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Modal View -->
+
+      <!-- Modal Edit -->
+      <ion-modal *ngIf="PrivMyPerfil.editar" #modalEP trigger="open-modal-editP-{{perfil.id_perfil}}">
+        <ng-template>
+          <ion-content>
+            <ion-toolbar style="text-align: center;">
+              <ion-title>Editar Perfil</ion-title>
+              <ion-buttons slot="end">
+                <ion-button color="light" (click)="modalEP.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+              </ion-toolbar>
+                <ion-list class="listAgg" style="padding: 8%;">
+                  
+                  <!-- Nombre Perfil -->
+                  <ion-label position="stacked" style="font-weight:bolder; left: 10%;">Nombre Perfil</ion-label>
+                  <ion-item [button]="true" style="border-bottom: 1.5px solid rgba(0, 0, 255, 0.8); margin: 0; margin-bottom: 5%; padding: 0;">
+                    <ion-input [(ngModel)]="perfil.nombre_perfil"></ion-input>
+                  </ion-item>
+                  <!-- Nombre Perfil -->
+
+                  <!-- Usuarios Asociados -->
+                  <ion-label position="stacked" style="font-weight:bolder; margin-bottom: 5%; position: relative;">Usuarios Asociados Perfil</ion-label>
+                  <ion-item [button]="true" style="border-bottom: 1.5px solid rgba(0, 0, 255, 0.89); margin: 0; padding: 0;">
+                    <ion-select  [multiple]="true" placeholder="Listado Usuarios Asociados">
+                      <ion-select-option style="cursor: none;" *ngFor="let userForPer of userForPerfil">{{ userForPer.Usuario }}</ion-select-option>
+                    </ion-select>
+                  </ion-item><br>
+                  <!-- Usuarios Asociados -->
+                   
+                  <!-- Privilegios  -->
+                  <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Privilegios</ion-label><br><br>
+                  <div style="margin: 0; padding: 0; text-align: center;">
+                    <input type="checkbox" [(ngModel)]="Pver" [checked]="Pver" >
+                    <p style="display: inline-block;">  Ver</p>  
+                    <input type="checkbox" [(ngModel)]="Pedit" [checked]="Pedit">
+                    <p style="display: inline-block;">  Editar</p>  
+                    <input type="checkbox" [(ngModel)]="Peli" [checked]="Peli">
+                    <p style="display: inline-block;">  Eliminar</p>  <br>
+                    <input type="checkbox" [(ngModel)]="Pimp" [checked]="Pimp">
+                    <p style="display: inline-block;">  Imprimir</p>  
+                    <input type="checkbox" [(ngModel)]="Pagr" [checked]="Pagr">
+                    <p style="display: inline-block;">  Agregar</p><br><br>
+                  </div>
+                  <!-- Privilegios  -->
+                  
+                  <!-- Accesos  -->
+                  <ion-label position="stacked" style="font-weight:bolder; position: relative;">Agrege Accesos (Opciones)</ion-label><br>
+                  <div style="border: 1px solid rgba(0, 0, 0, 0); padding: 5%; margin: 0;">
+                    <input type="checkbox" [(ngModel)]="AccAnimales" [checked]="AccAnimales">
+                    <p style="display: inline-block;">  Animales</p><br>
+                    <input type="checkbox" [(ngModel)]="AccCultivos" [checked]="AccCultivos">
+                    <p style="display: inline-block;">  Cultivos</p><br>
+                    <input type="checkbox" [(ngModel)]="AccUsuarios" [checked]="AccUsuarios">
+                    <p style="display: inline-block;">  Usuarios</p><br>
+                    <input type="checkbox" [(ngModel)]="AccIA" [checked]="AccIA">
+                    <p style="display: inline-block; margin: 0;">  I.A.</p><br>
+                    <div style="padding: 5%; margin: 0;">
+                      <input type="checkbox" [(ngModel)]="AccDetector" [checked]="AccDetector">
+                      <p style="display: inline-block;">  Detector</p><br>
+                      <input type="checkbox" [(ngModel)]="AccModelos" [checked]="AccModelos">
+                      <p style="display: inline-block;">  Modelos</p><br>
+                    </div>
+                    </div>
+                    <!-- Accesos  -->
+                </ion-list>
+
+                <!-- Mensajes de Validacion -->
+                <div style="padding-left: 20%; margin-bottom: 5%;">
+                  <p *ngIf="msj_ErrorEdit.statePrv" style="margin:0; color: red; font-size: small;">
+                    <ion-icon name="alert-circle-outline"></ion-icon> 
+                    {{msj_ErrorEdit.MensajePrv}}
+                  </p>
+                  <p *ngIf="msj_ErrorEdit.state" style="margin:0; color: red; font-size: small;">
+                    <ion-icon name="alert-circle-outline"></ion-icon> 
+                    {{msj_ErrorEdit.Mensaje}}
+                  </p>
+                  <p *ngIf="msj_ErrorEdit.stateOpc" style="margin:0; color: red; font-size: small;">
+                    <ion-icon name="alert-circle-outline"></ion-icon> 
+                    {{msj_ErrorEdit.MensajeOpc}}
+                  </p>
+                </div>
+                <!-- Mensajes de Validacion -->
+  
+              <!-- Opciones [Confirmar, Cancelar] -->
+              <div style="text-align: center;">
+                <ion-button fill="outline" (click)="modalEP.dismiss()">Cancelar</ion-button>
+                <ion-button (click)="editarPerfil(modalEP, perfil, AccAnimales,AccCultivos,AccUsuarios,AccIA,AccDetector,AccModelos,
+                Pver,Pedit,Peli,Pimp,Pagr)">Confirmar</ion-button>
+              </div>
+              <!-- Opciones [Confirmar, Cancelar] -->
+
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Modal Edit -->
+
+      <!-- Modal Delete -->
+      <ion-modal *ngIf="PrivMyPerfil.eliminar" #modalDPerfil trigger="open-modal-delete-{{perfil.id_perfil}}" >
+        <ng-template>
+          <ion-content>
+            <ion-toolbar color="danger" style="text-align: center;">
+              <ion-title style="font-size:large; margin-left: 12%;">Eliminar Perfil</ion-title>
+              <ion-buttons slot="end">
+                <ion-button color="light" (click)="modalDPerfil.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+            <ion-list>
+              <ion-item style="padding: 5px;">
+                <ion-label style="text-align: center;">
+                  <h2 style="font-size: medium;">¿Desea Eliminar este Perfil?</h2>
+                  <p style="font-size: medium;">{{ perfil.nombre_perfil }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <div style="text-align: center; margin-top: 0vh;">
+              <ion-button color="danger" fill="outline" (click)="modalDPerfil.dismiss()">Cancelar</ion-button>
+              <ion-button color="danger" (click)="deletePerfil(perfil.id_perfil); modalDPerfil.dismiss()">Confirmar</ion-button>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Modal Delete -->
+
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <!-- List End -->
+
+</ion-card>
+<!-- Content Pagina Perfil -->
+
+
+
+<!-- Content Pagina Usuario -->
+<ion-card *ngIf="pagUsuarios" style="height: 100%; ">  
+  <!-- Mesagge-Actions -->
+  <div class="alert succesAlert" role="alert" *ngIf="msj_act">
+    <strong style="font-size:small;"> {{ msj_act_Usuario }} </strong> 
+    <ion-icon name="checkmark-circle-outline"></ion-icon>
+  </div>
+  <div class="alert succesAlert" role="alert" *ngIf="msj_act_Usuario_ERR" style="background-color: red;">
+    <strong style="font-size:small;"> {{ msj_act_Usuario_ERR }} </strong> 
+    <ion-icon name="warning-outline"></ion-icon>
+  </div>
+    <!-- Title -->
+  <ion-card-header style="text-align: center;">
+    <ion-card-title class="title">Listado Usuarios</ion-card-title>
+  </ion-card-header>
+  <!-- Fin Title -->
+
+  <ion-list [inset]="true" style="margin-top: 0px; margin-bottom: 0; padding-bottom: 0;">
+    <ion-button *ngIf="PrivMyPerfil.agregar" size="default" id="open-modal-add" (click)="listUsersSinPerfil()">
+      Asignar Perfil
+      <ion-icon name="add-sharp"></ion-icon>
+    </ion-button>
+    <!-- Modal Add -->
+    <ion-modal *ngIf="PrivMyPerfil.agregar" #modalA trigger="open-modal-add">
+      <ng-template>
+        <ion-content>
+          <ion-toolbar style="text-align: center;">
+            <ion-title>Asignación Perfil</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="light" (click)="modalA.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+            </ion-buttons>
+            </ion-toolbar>
+              <ion-list class="listAgg" style="padding: 8%;">
+                
+                <!-- Seleccion Usuario -->
+                <ion-label position="stacked" style="font-weight:bolder; margin-left: 5%;">Ingrese Usuario</ion-label>
+                <ion-item>
+                  <ion-select [(ngModel)]="usuariForPerf" placeholder="Seleccione Usuario">
+                    <ion-select-option *ngFor="let getUser of usuariosSinPerfil" value="{{getUser.Id_Usuario}}">{{getUser.Usuario}}</ion-select-option>
+                  </ion-select>
+                </ion-item><br>
+                <!-- Seleccion Usuario -->
+
+                <!-- Seleccion Perfil -->
+                <ion-label position="stacked" style="font-weight:bolder; margin-left: 5%;">Ingrese Perfil</ion-label>
+                <ion-item>
+                  <ion-select [(ngModel)]="perfilForPerf" placeholder="Seleccione Perfil">
+                    <ion-select-option *ngFor="let Perf of perfiles" value="{{Perf.Id_Perfil}}">{{Perf.nombre_perfil}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <!-- Seleccion Perfil -->
+
+              </ion-list>
+
+              <!-- Mensajes de Validacion -->
+              <div style="padding-left: 20%; margin-bottom: 5%;">
+                <p *ngIf="valER" style="margin:0; color: red; font-size: small;">
+                  <ion-icon name="alert-circle-outline"></ion-icon> 
+                  Seleccione Cada Campo
+                </p>
+              </div>
+              <!-- Mensajes de Validacion -->
+
+            <!-- Opciones -->
+            <div style="text-align: center;">
+              <ion-button fill="outline" (click)="modalA.dismiss()">Cancelar</ion-button>
+              <ion-button (click)="aggUsuario(modalA)">Confirmar</ion-button>
+            </div>
+            <!-- Opciones -->
+
+        </ion-content>
+      </ng-template>
+    </ion-modal><br>
+  </ion-list>
+
+  <!-- List -->
+  <ion-card style="display: inline-block; overflow-y: auto; max-height: 60%; height: 80%; width: 83%; margin-left: 8%;">
+    <ion-list [inset]="true" style="margin-left: 1%; margin-top: 0;">
+      <ion-item *ngFor="let userlist of usersList">
+        <ion-label style="display: inline-block; font-size: small;">{{ userlist.Usuario }}</ion-label>
+        
+        <!-- Opciones Registros -->
+        <ion-button *ngIf="PrivMyPerfil.ver" size="small" color="success" id="open-modal-view-{{userlist.Id_Usuario}}" (click)="usuarioXperfil(userlist.Id_Perfil_Movil)">
+          <ion-icon name="eye" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="PrivMyPerfil.editar" size="small" color="warning" id="open-modal-editP-{{userlist.Id_Usuario}}" (click)="usuarioXperfil(userlist.Id_Perfil_Movil)">
+          <ion-icon name="create-sharp" slot="icon-only"></ion-icon>
+        </ion-button>
+        <!-- Opciones Registros -->
+
+      <!-- Modal View -->
+      <ion-modal *ngIf="PrivMyPerfil.ver" #modalAPerfilViewUsers trigger="open-modal-view-{{userlist.Id_Usuario}}">
+        <ng-template>
+          <ion-content>
+            <ion-toolbar style="text-align: center;">
+              <ion-title>Vizualizar Perfil</ion-title>
+              <ion-buttons slot="end">
+                <ion-button color="light" (click)="modalAPerfilViewUsers.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+              </ion-toolbar>
+                <ion-list class="listAgg" style="padding: 8%;">
+                  
+                  <ion-item [button]="true">
+                    <ion-label position="stacked">Usuario Referdio</ion-label>
+                    <input value="{{userlist.Usuario}}" readonly class="itemListAdd border-0">
+                  </ion-item>
+
+                  <ion-item [button]="true">
+                    <ion-label position="stacked">Perfil Definido</ion-label>
+                    <input value="{{usersXperfil.nombre_perfil}}" [ngStyle]="{'color': colorUxP}" readonly class="itemListAdd border-0">
+                  </ion-item>
+  
+                </ion-list>
+              <div style="text-align: center;">
+              <!-- opcion -->
+              <ion-button fill="outline" (click)="modalAPerfilViewUsers.dismiss()">Cancelar</ion-button>
+              <!-- opcion -->
+
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Modal View -->
+
+      <!-- Modal Edit -->
+      <ion-modal *ngIf="PrivMyPerfil.editar" #modalEPUsers trigger="open-modal-editP-{{userlist.Id_Usuario}}" (ionModalDidDismiss)="onModalDismiss()">
+        <ng-template>
+          <ion-content>
+            <ion-toolbar style="text-align: center;">
+              <ion-title>Editar Perfil</ion-title>
+              <ion-buttons slot="end">
+                <ion-button color="light" (click)="modalEPUsers.dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              </ion-buttons>
+              </ion-toolbar>
+                <ion-list class="listAgg" style="padding: 8%;">
+
+
+                  <ion-item [button]="true">
+                    <ion-label position="stacked">Usuario Referdio</ion-label>
+                    <input value="{{userlist.Usuario}}" readonly class="itemListAdd border-0">
+                  </ion-item>
+
+                  <!-- Seleccion Usuario -->
+                  <ion-label position="stacked" style="margin-left: 5%;">Perfil Definido</ion-label>
+                  <ion-item>
+                    <ion-select [(ngModel)]="usuariForPerfEdit" placeholder="{{usersXperfil.nombre_perfil}}">
+                      <ion-select-option value="NotPefil">Sin Perfil (app)</ion-select-option>
+                      <ion-select-option *ngFor="let PerfE of perfiles" value="{{PerfE.Id_Perfil}}">{{PerfE.nombre_perfil}}</ion-select-option>
+                    </ion-select>
+                  </ion-item><br>
+                  <!-- Seleccion Usuario -->
+
+
+                <!-- Mensajes de Validacion -->
+                  <p *ngIf="msj_ErrorUpdate" style="margin-left:5%; color: red; font-size: small;">
+                    <ion-icon name="alert-circle-outline"></ion-icon> 
+                    {{msj_ErrorUpdate}}
+                  </p>
+                <!-- Mensajes de Validacion -->
+  
+              <!-- Opciones [Confirmar, Cancelar] -->
+              <div style="text-align: center;">
+                <ion-button fill="outline" (click)="modalEPUsers.dismiss();">Cancelar</ion-button>
+                <ion-button (click)="editarUsuarioXPerf(modalEPUsers, userlist)">Confirmar</ion-button>
+              </div>
+              <!-- Opciones [Confirmar, Cancelar] -->
+              </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Modal Edit -->
+
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <!-- List End -->
+
+</ion-card>
+<!-- Content Pagina Usuario -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal VerifyAPI -->
+<ion-modal style="border: none;" [isOpen]="isModalOpenAPI" class="modalDown" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="handleModalDismiss()">
+  <ng-template>
+  <div class="block">
+      <img src="../assets/errors/not_wifi.svg" style="width: 40%; height: 40%; margin-bottom: 5%;">
+      <p style="display: inline-block; font-size: xx-large;">Error de Conexión</p><br>
+      <p style="display: inline-block; font-size: medium;">Verifique su Conexión al Servidor</p>  
+  </div>
+  </ng-template>
+</ion-modal>
+<!-- VerifyAPI Modal -->

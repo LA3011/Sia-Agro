@@ -1,0 +1,50 @@
+<ion-content> 
+ 
+    <ion-card  class="card-Primary">
+      <ion-icon  class="shadows ion-activatable" name="chevron-back" style="font-size: 4rem; margin-top:2rem;"></ion-icon>
+        <ion-card class="shadowsC card-Inicio" *ngIf="programs.usuarios">
+            <span class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle" style="top: 4%; right: 9%;">
+                <span class="visually-hidden" style="color: aliceblue;"></span>
+            </span>
+            <ion-icon class="icon-Inicio" name="people" style="color: rgba(2, 2, 2, 0.918);"></ion-icon>    
+            <ion-card class="items" [routerLink]="['/usuarios']">
+                Usuarios Perfiles 
+            </ion-card>
+        </ion-card>
+        <ion-card class="shadowsC card-Inicio" *ngIf="programs.cultivos">
+            <span class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle" style="top: 4%; right: 9%;">
+                <span class="visually-hidden" style="color: aliceblue;"></span>
+            </span>
+            <ion-icon class="icon-Inicio" name="leaf" style="color: rgba(59, 194, 18, 0.918);"></ion-icon>    
+            <ion-card class="items" [routerLink]="['/cultivos']">
+                Gestión Cultivos
+            </ion-card>
+        </ion-card> 
+        <ion-card class="shadowsC card-Inicio" *ngIf="programs.Detector">
+            <span class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle" style="color: rgba(240, 248, 255, 0); top: 4%; right: 9%;">
+                <span class="visually-hidden" style="color: aliceblue;"></span>
+            </span>
+            <ion-icon class="icon-Inicio" name="logo-ionitron" style="color: rgba(9, 99, 111, 0.918);"></ion-icon>    
+            <ion-card class="items" [routerLink]="['/Inteligencia-Artificial']">
+                I.A. Detección 
+            </ion-card>
+        </ion-card>
+      <ion-icon class="shadows" name="chevron-forward" style="font-size: 4rem; margin-top:2rem;"></ion-icon >
+    </ion-card>
+
+    <ion-card>
+        <ion-img src="../../../assets/inicio.jpg"></ion-img>
+    </ion-card>
+    
+    <ion-card-content style="display: inline-block; text-align: center; margin: 10px;">   
+        <ion-card-content style="padding: 5%; color: black;">
+            La Inteligencia Artificial (IA) está desempeñando un papel crucial en la agricultura, optimizando 
+            procesos y mejorando la productividad. Aquí tienes algunas formas en que la IA se aplica al sector agrícola
+            Reducción de pesticidas y fertilizantes: Mediante el uso de drones y sensores remotos, la IA identifica plagas y 
+            enfermedades de manera precisa. Esto permite un control más eficiente y específico, reduciendo la necesidad de productos químicos.
+            Monitoreo constante: Sensores remotos, satélites y drones recopilan datos las 24 horas del día sobre el campo. 
+            Esto ayuda a los agricultores a comprender mejor las condiciones del suelo, la humedad, la temperatura y la salud de las plantas, lo que mejora la toma de decisiones
+        </ion-card-content>
+    </ion-card-content>
+    
+</ion-content>

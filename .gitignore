@@ -1,0 +1,13 @@
+InteligenciaArtificial/data/entrenamiento/Hoja de Guayaba
+InteligenciaArtificial/data/entrenamiento/random
+InteligenciaArtificial/data/validacion/Hoja de Guayaba
+InteligenciaArtificial/data/validacion/random
+InteligenciaArtificial/ModelosGeneradosH5
+
+SiaAgro/dist
+SiaAgro/.angular
+SiaAgro/node_modules
+
+server/build
+server/node_modules
+

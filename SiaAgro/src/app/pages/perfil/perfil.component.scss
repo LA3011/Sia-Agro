@@ -1,0 +1,117 @@
+ion-modal {
+    --height: 50%;
+    --width: 90%;
+    --border-radius: 10px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  .itemsInput{
+    border-bottom: 1px solid rgb(0, 4, 255);
+}
+  
+  ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+  }
+  
+  ion-modal ion-toolbar {
+    --background: hsl(236, 100%, 51%);
+    --color: white;
+  }
+
+  ion-modal{
+    background: #00000069;
+  }
+
+  .toolbar-container-delete{
+    background: red;
+  }
+
+  .form-control-lg{
+    outline: none;
+    font-size: 14px;
+    padding: 0%;
+  }
+
+  input:focus {
+    outline: none;
+}
+  
+  
+.nameform{
+  height: 70%;
+  border: none;
+  width: 100%;
+}
+  
+.succesAlert{
+  color: aliceblue; 
+  background-color: rgb(85, 186, 112); 
+  display: block; 
+  width: 100%; 
+  border: 1px solid rgba(0, 0, 0, 0.734); 
+  text-align: center; 
+  position: absolute; 
+  z-index: 10;
+}
+
+.title{
+  font-weight: 700;
+  font-size: 40px; 
+  padding: 0;
+  font-size: xx-large;
+}
+
+.listAgg{
+  border-bottom: 1px solid rgb(0, 4, 255);
+  margin-bottom: 1vh;
+  padding-top: 0;
+}
+
+.itemListAdd{
+  height: 70%; 
+  border: none; 
+  width: 100%;
+}
+
+.listAddlabel{
+  color: red; 
+  margin-left: 2.2%;
+}
+
+
+.block {
+  width: 100%;
+  position: relative;
+  height: 300px;
+  display: block;
+  text-align: center;
+  padding-top: 10%;
+  // border: 2px solid rgb(78, 224, 20);
+}
+.modalDown{
+  // border: 2px solid rgb(224, 20, 20);
+  border: none;
+  --height: auto;
+  padding-top: 70%;
+  // width: 100%;
+}
+
+
+.disabled-checkbox {
+  cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
+
+  pointer-events: none; /* Deshabilita la interacción */
+  opacity: 1; /* Mantiene la opacidad */
+  cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
+}
+
+/* This style is for demonstration purposes only. */
+/* It's not required for the tabs to function. */
+.example-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+

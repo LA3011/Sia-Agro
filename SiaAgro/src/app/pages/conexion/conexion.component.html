@@ -1,0 +1,75 @@
+<ion-content style="background-color: #0000005a;">
+  <ion-card class="cardGeneral"> 
+    <!-- MIGAS-PAN -->
+    <ion-breadcrumbs> 
+      <ion-breadcrumb class="breadCrumbIcons">
+        Configuración
+        <ion-icon slot="end" name="cog"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb class="breadCrumbIcons">
+        Conexion
+        <ion-icon slot="end" name="wifi"></ion-icon>
+      </ion-breadcrumb>
+    </ion-breadcrumbs>    
+    <!-- FIN-MIGAS-PAN --> 
+ 
+    <!-- TITLE -->
+    <ion-card-header class="cardTitle">
+      <ion-card-title class="titleG">Conexion de Red</ion-card-title>
+    </ion-card-header>
+    <!-- TITLE --> 
+
+    <!-- SUB-TITLE -->
+    <div class="divAddres">
+      <p class="addresTitle">Dirección Establecida</p>
+      <p class="addres">{{Url}}</p>  
+      <ion-icon (click)="clear()" name="create-outline" class="iconModify"></ion-icon>
+
+    </div>
+    <!-- SUB-TITLE --> 
+
+  <!-- Modal -->
+  <ion-modal #modalnfo [isOpen]="btn" class="modalAddres" (didDismiss)="this.statusAPI();">
+    <ng-template>
+      <ion-content>
+        <ion-toolbar color="primary" style="text-align: center;">
+          <ion-title class="titleModal">Modificar Red</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="light" (click)="this.statusAPI();">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+
+        <ion-list style="width: 100%; padding-left: 6%; padding-bottom: 2%; margin-bottom: 5%;">
+
+          <p style="font-size: medium; margin: 0; margin-top: 5%; margin-bottom: 0;">URL</p>
+          <p class="ExampleAddres">{{protocolo}}://{{dominio}}:{{puerto}}</p>
+
+          <p style="font-size: small; margin: 0;">Protocolo</p>
+          <input [(ngModel)]="protocolo" type="radio" color="primary" value="http"> 
+          <p style="color: grey; display: inline-block;">http</p>   
+          <input  [(ngModel)]="protocolo" type="radio" color="primary" value="https" > 
+          <p  style="color: grey; display: inline-block;">https</p>
+
+          <p style="font-size: small; margin: 0;" [ngClass]="{'Err_iP': Err_iP}">Dirección IP ó Dominio</p>
+          <input  [(ngModel)]="dominio" style="font-size: medium;" placeholder="Ej: SiaAgro.com" class="inputAddres">
+
+
+          <p style="font-size: small; margin: 0;" [ngClass]="{'Err_iP': Err_Pt}">Puerto (Opcional)</p>
+          <input  [(ngModel)]="puerto" type="number" style="font-size: medium;" placeholder="Ej: 8080" class="inputAddres">
+
+        </ion-list>
+
+        <ion-buttons class="btn">
+          <ion-button color="primary" fill="outline" (click)="resetAddress(modalnfo)">Resetear</ion-button>
+          <ion-button color="primary" fill="solid" (click)="editAddress(modalnfo)">Confirmar</ion-button>
+        </ion-buttons>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- Modal -->
+ 
+  </ion-card>
+</ion-content>
