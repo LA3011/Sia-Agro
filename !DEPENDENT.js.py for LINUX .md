@@ -50,7 +50,7 @@
         > pyenv install 3.9.13
 
     Paso 4: Establecer la versión de Python instalada como predeterminada
-        > pyenv global 3.9.13
+        > pyenv global 3.9.13 
 
     Paso 5: Verificar la instalación
         > python --version
@@ -84,9 +84,8 @@
     pip install wheel==0.44.0 
     pip install wrapt==1.16.0 
     pip install zipp==3.21.0
-
     pip install opencv-python==4.5.5.64
-
+    pip install matplotlib==3.5.3
 
 # Instalacion PostgreSQL
     Paso 1: Instalar PostgreSQL
