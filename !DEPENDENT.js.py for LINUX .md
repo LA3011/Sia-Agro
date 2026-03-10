@@ -182,3 +182,18 @@
 
     - sudo systemctl restart postgresql             // reiniciar server postgres
 
+# SISTEMA-WEB "ESPECIFICACIONES" (DEBE BASARSE EN LA VERSION DE COMPOSER)
+    > php -v 
+        PHP 7.4.3-4ubuntu2.29 (cli) (built: Mar 25 2025 18:57:03) ( NTS )
+            Copyright (c) The PHP Group
+            Zend Engine v3.4.0, Copyright (c) Zend Technologies
+            with Zend OPcache v7.4.3-4ubuntu2.29, Copyright (c), by Zend Technologies
+    > composer -v
+        Composer version 2.2.24 2024-06-10 22:51:52
+    
+    NOTA: se debe respetar las siguientes dependencias "composer.json"
+        "require": {
+            "php": "7.4.*",
+            "endroid/qr-code": "3.4.*",
+            "proj4php/proj4php": "2.0.*"
+        }
