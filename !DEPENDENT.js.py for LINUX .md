@@ -87,11 +87,14 @@
     pip install opencv-python==4.5.5.64
     pip install matplotlib==3.5.3
 
-# Instalacion PostgreSQL
+# Instalacion (PostgreSQL) 12.22 
     Paso 1: Instalar PostgreSQL
         > sudo apt install postgresql postgresql-contrib
+            > sudo apt install postgresql-12 postgresql-contrib-12 # especificar una version(ej: 12)
+        > psql --version # version postgresql
+        > sudo apt install postgresql-12-postgis-3 # vers. postgresql-[VERSION]-postgis-3
 
-    Paso 2: Verificar la instalación
+    Paso 2: Verificar la instalación postgres
         > sudo systemctl status postgresql
 
     Paso 3: Configurar la contraseña del usuario postgres
@@ -116,7 +119,7 @@
     Desde el navegador web ve a https://localhost/pgadmin4. Ingresa con el usuario pgadmin y la contraseña que configuraste.
 
 
-# Configuracion PostgreSQL (shell-Ubuntu)
+# Configuracion PostgreSQL (shell-Ubuntu 12.22-0ubuntu0.20.04.4) (PostgreSQL) 12.22 
 
     1) Ingresar Prompo de 'Postgres'
     sudo -u postgres psql 
@@ -149,6 +152,10 @@
     - sudo -u <usuario> psql -d nombre_de_tu_base_de_datos
     - sudo -u postgres psql -d siaagrob
 
+    Habilitar postgis en BD (una vez dentro de la BD <sudo -u postgres psql -d nombre_de_tu_bd> )
+    - CREATE EXTENSION postgis; # Dentro del prompt (nombre_de_tu_bd=#)
+    - \dx # Para verificar
+    
     Importar la base de datos desde la terminal:
     - psql -U tu_usuario -d nombre_de_tu_base_de_datos -f ruta/al/archivo.sql
     - psql -U postgres2 -d siaagrob -f /home/la/Escritorio/siaAgro/DataBase/DataBaseMovil/siaAgroDataBase20-11-2024.sql
