@@ -29,7 +29,7 @@ export class LoginComponent  implements OnInit {
   isModalOpenAPI = false 
 
   // Verify API
-  UrlDefault = 'http://192.168.1.101:3000'; 
+  UrlDefault = 'http://51.81.63.216:3100'; 
   Url:any
   Err_iP = false
   Err_Pt = false

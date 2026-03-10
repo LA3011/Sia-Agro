@@ -112,7 +112,10 @@
     </ion-header>
     <ion-content class="ion-padding">
       <p>
-        <strong style="color: gray;">Se encontró el siguiente Resultado.</strong>
+        <strong style="color: gray; font-size: medium;">
+          Se encontró el Resultado. 
+          <span style="font-size: small;">({{tiempoTotalDetec}}seg)</span>
+        </strong>
       </p>
       <h2 style="margin: 0; text-align: center;">{{dataSet.rows[0].nombre}}</h2>
       <p>
@@ -135,7 +138,17 @@
       <p *ngIf="dataSet.rows[0].amenaza" style="color: red; text-align: center;">
         - Puede considerarse como Organismo Maliciso (Hongo, Parasito, Plaga, etc)
       </p>
- 
+
+      <!-- opinion usuario ia -->
+      <div style="text-align: center;">
+        ¿Está satisfecho con el Resultado?<br>
+        <ion-icon *ngIf="!like" (click)="likeResponse()" size="large" color="success" name="thumbs-up-outline"></ion-icon>
+        <ion-icon *ngIf="like" (click)="likeResponse()" size="large" color="success" name="thumbs-up"></ion-icon>
+
+        <ion-icon *ngIf="!dislike" (click)="dislikeResponse()" size="large" color="danger" name="thumbs-down-outline"></ion-icon>
+        <ion-icon *ngIf="dislike" (click)="dislikeResponse()" size="large" color="danger" name="thumbs-down"></ion-icon>
+      </div>
+
       <!--  -->
       <div *ngIf="colorFab == 'success'" style="text-align: center; ">
         <ion-button fill="outline" (click)="setOpen(false)" color="medium" style="font-size:x-small">Cancelar</ion-button>
@@ -153,26 +166,39 @@
       <ion-toolbar color="medium">
         <ion-title>Ooop!</ion-title>
         <ion-buttons style="position: absolute; right: 5%; top: 25%;">
-          <ion-button (click)="setOpen(false)">
+          <ion-button (click)="setOpen(false);">
             <ion-icon name="close-outline" style="font-size: x-large;"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header> 
     <ion-content class="ion-padding" style="text-align: center;">
-      <h2 style="margin: 0;  font-size: large;">Sin Resultados...</h2>
+      <h2 style="margin: 0;  font-size: medium;">
+        Sin Resultados.
+        <span style="font-size: small;">({{tiempoTotalDetec}}seg)</span>
+      </h2>
       <p>
         Lo Sentimos, No se Encontró Información Relacionada con la Imagén que se Proporsionó
+        <br>
       </p>
+
+      <!-- opinion usuario ia -->
+      <div>
+        ¿Está satisfecho con el Resultado?<br>
+        <ion-icon *ngIf="!like" (click)="likeResponse()" size="large" color="success" name="thumbs-up-outline"></ion-icon>
+        <ion-icon *ngIf="like" (click)="likeResponse()" size="large" color="success" name="thumbs-up"></ion-icon>
+
+        <ion-icon *ngIf="!dislike" (click)="dislikeResponse()" size="large" color="danger" name="thumbs-down-outline"></ion-icon>
+        <ion-icon *ngIf="dislike" (click)="dislikeResponse()" size="large" color="danger" name="thumbs-down"></ion-icon>
+      
+      </div>
+      
       <div class="form-group div-animado" style=" display: flex; align-items: center; justify-content: center; margin: 2%; margin-bottom: 7%;">
         <img id="blah" style="width: 90%; height: 90%;"  [src]="'../../../assets/errors/sin_resultados.jpg'" alt="Imagen" />
       </div>
     </ion-content>
   </ng-template>
 </ion-modal>
-
-
-
 
 <!-- BUTTONS-ACTION  -->
 <ion-button class="buttonDetectStatus" expand="block" [disabled]="isDisabled" (click)="intelify();"  *ngIf="buttonArtify" [ngClass]="{'original2-button': statusImage=='Empezar Detección', 'original-button': statusImage=='Detectar'}" color="none">

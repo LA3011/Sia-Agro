@@ -43,6 +43,7 @@
 
     <!-- [Menú] --> 
     <ion-card class="pass1 menuGe" *ngIf="stepsProcess === 0 && !menu"> 
+      
       <ion-button color="primary" expand="block" style="size: 40%; margin-bottom: 5.3%;" (click)="myTags()">
          Mis Etiquetas   
          <ion-icon name="pricetags"></ion-icon>
@@ -65,12 +66,95 @@
         Entrenar Modelo  
         <ion-icon name="barbell"></ion-icon>
       </ion-button>
-      <ion-button color="primary" expand="block" style="size: 40%;" [routerLink]="['/Inteligencia-Artificial']">
+      <ion-button color="primary" expand="block" style="size: 40%;" href="Inteligencia-Artificial" >
         Probar Modelo  
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-card>
-     
+    
+    <!-- [Rendimiento] -->
+    <ion-accordion-group style="margin: 15px;" *ngIf="stepsProcess === 0 && !menu">
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>
+            <ion-icon color="medium" name="help-circle-outline"></ion-icon>
+            Rendimiento
+          </ion-label>
+        </ion-item>
+        <div style="background-color: rgba(58, 56, 56, 0.055); border-radius: 0 0 15px 15px;" slot="content">
+          <ion-grid>
+            <ion-row class="ion-justify-content-center">
+              
+               <!-- Detecciones -->
+               <ion-col size="6" size-md="5" size-lg="3">
+                <ion-card style="margin: 0 5px;" color="light" class="ion-activatable ripple-parent rectangle mini-card">
+                  <!-- <ion-ripple-effect></ion-ripple-effect> -->
+                  <ion-card-header style="padding: 3px; text-align: center;" class="ion-no-padding ion-padding-top ion-padding-horizontal">
+                    <ion-card-subtitle style="font-weight: bold; color: grey;" class="mini-title">
+                      <ion-icon name="locate-outline"></ion-icon>
+                      Detecciones
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content class="ion-text-center ion-no-padding">
+                    <h2 class="mini-number">{{rendimient.detect}}</h2>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+
+              <!-- tamanio img -->
+              <ion-col size="6" size-md="5" size-lg="3">
+                <ion-card style="margin: 0 5px;" color="light" class="ion-activatable ripple-parent rectangle mini-card">
+                  <!-- <ion-ripple-effect></ion-ripple-effect> -->
+                  <ion-card-header style="padding: 3px; text-align: center;" class="ion-no-padding ion-padding-top ion-padding-horizontal">
+                    <ion-card-subtitle style="font-weight: bold; color: blue;" class="mini-title">
+                      <ion-icon name="pricetags-outline"></ion-icon>
+                      Etiquetas
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content class="ion-text-center ion-no-padding">
+                    <h2 class="mini-number">{{rendimient.tag}}</h2>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+      
+              <!-- precision -->
+              <ion-col size="6" size-md="5" size-lg="3">
+                <ion-card style="margin: 0 5px;" color="light" class="ion-activatable ripple-parent rectangle mini-card">
+                  <!-- <ion-ripple-effect></ion-ripple-effect> -->
+                  <ion-card-header style="padding: 3px; text-align: center;" class="ion-no-padding ion-padding-top ion-padding-horizontal">
+                    <ion-card-subtitle style="font-weight: bold; color: green;" class="mini-title">
+                      <ion-icon name="ribbon-outline"></ion-icon>
+                      Precisión
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content class="ion-text-center ion-no-padding">
+                    <h2 class="mini-number">{{rendimient.right}}%</h2>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+          
+              <!-- fotos desc -->
+              <ion-col size="6" size-md="5" size-lg="3">
+                <ion-card style="margin: 0 5px;" color="light" class="ion-activatable ripple-parent rectangle mini-card">
+                  <!-- <ion-ripple-effect></ion-ripple-effect> -->
+                  <ion-card-header style="padding: 3px; text-align: center;" class="ion-no-padding ion-padding-top ion-padding-horizontal">
+                    <ion-card-subtitle style="font-weight: bold; color: red;" class="mini-title">
+                      <ion-icon name="thumbs-down-outline"></ion-icon>
+                      Ft. Ilegibles
+                    </ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content class="ion-text-center ion-no-padding">
+                    <h2 class="mini-number">{{rendimient.discarded}}</h2>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+      
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
     <!-- [Etiquetas] -->
     <p class="pasos" *ngIf="menu=='listTag'">Listado Etiquetas</p>
     <ion-card *ngIf="menu=='listTag'" class="listtag"> 

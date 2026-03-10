@@ -116,7 +116,28 @@ export class InteligencyArtModelsComponent  implements OnInit {
   constructor( 
     public usersService:UsersService, 
     public validateService:ValidateService,
-    public router:Router){ } 
+    public router:Router)
+  { 
+    this.getRendimient()
+  } 
+
+
+  // content-rendimient
+  rendimient = {
+    detect: 0,
+    tag: "0",
+    right: 0,
+    discarded: 0
+  } 
+  async getRendimient(){
+    this.usersService.InfoRendimientoIA().subscribe({
+      next: (data) => {
+        this.rendimient = data;
+      },
+      error: (err) => console.error('Error al obtener rendimiento', err)
+    });
+  }
+
 
   // Formulario Reactivo
   formGroup = new FormGroup({
@@ -534,7 +555,7 @@ export class InteligencyArtModelsComponent  implements OnInit {
     //       console.error('Error al subir el Zip:', error);
     //     }
     //   );
-    }
+  }
 
   // Validar: Estructura Arch.Zip [comprimido/carpeta/fotos.jpg]
   async validZipStruct(){

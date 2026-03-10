@@ -66,14 +66,53 @@ export class InteligencyArtComponent  implements OnInit {
     console.log(`User Data: ${this.validateService.valSession().data }`);
 
     this.listCultivoPlaga() // listar cultivos-Plagas
+    this.resetlikes()
     this.ipAdress = this.usersService.AddressAPIs() + "/inteligencyArtificial"
   }
- 
+
+  // evaluar respuesta modelo IA
+  like = false
+  dislike = false
+  likeResponse(){
+    this.like = true
+    this.dislike = false
+  }
+  dislikeResponse(){
+    this.dislike = true
+    this.like = false
+  }
+  resetlikes(){
+    this.like = false
+    this.dislike = false
+  }
+  async sendLikes(){
+    await this.usersService.sendLikesIA(this.like, this.dislike).subscribe(
+      (res) => {
+        console.log(res)
+      },(erro) =>{
+        console.error('Error al Enviar Likes');
+      }
+    );
+    this.resetlikes()
+
+  }
+
   // [Conexion API]
   handleModalDismiss() {
     this.isModalOpenAPI = false; // cerrar modal [Conexion API]
   }
 
+  async contadorDetect(){
+    await this.usersService.setDetectionIA().subscribe(
+      (res) => {
+        console.log(res)
+         
+      },(erro) =>{
+        console.error('Error al Contar Deteccion');
+
+      }
+  );
+  }
     
   // Captura de Foto
   capturedImage: File | undefined | any; // Almacena la imagen capturada en formato File
@@ -133,8 +172,39 @@ export class InteligencyArtComponent  implements OnInit {
     }
   }
 
+  // reloj tiempo deteccion IA
+  tiempoTotalDetec: number = 0;
+  tiempoInicioDetec: number | null = null;
+  comenzarTiempoDetec() {
+    this.tiempoInicioDetec = performance.now();
+  }
+  detenerTiempoDetec() {
+    if (this.tiempoInicioDetec === null) {
+      console.warn("Advertencia: Se intentó detener el tiempo sin haberlo iniciado.");
+      return 0;
+    }
+
+    const ms = performance.now() - this.tiempoInicioDetec;
+    this.tiempoTotalDetec = ms / 1000;
+    this.tiempoTotalDetec = Number(this.tiempoTotalDetec.toFixed(1))
+
+    // Limpiamos el inicio para la próxima medición
+    this.tiempoInicioDetec = null; 
+
+    console.log(`Tiempo de Detección IA: ${this.tiempoTotalDetec.toFixed(2)} ms`);
+    return this.tiempoTotalDetec;
+  }
+  
+
   // Upload-Image-Server
   async uploadFile() {
+
+    // monitoriar tiempo de deteccion IA
+    this.comenzarTiempoDetec();
+
+    // contador detecciones
+    this.contadorDetect();
+
     this.spinner2 = true;
     this.isDisabledPosicImag = true;
   
@@ -195,6 +265,7 @@ export class InteligencyArtComponent  implements OnInit {
   }
   setOpen(isOpen: boolean) { 
     this.isModalOpen = isOpen;
+    this.sendLikes();
   }
   async dataSetBD(){
     // Detection-Image-BD
@@ -204,10 +275,18 @@ export class InteligencyArtComponent  implements OnInit {
         (res:any) => {
           if(res.msj){
             this.setOpen(true)
+            // detener tiempo de deteccion IA
+            this.detenerTiempoDetec();
+
             return this.dataSetModal = false
+
+
           }
           this.dataSet = res;
           this.dataSetModal = true 
+
+          // detener tiempo de deteccion IA
+          this.detenerTiempoDetec();
 
           // llamar func. Registro Deteccion
           this.optionsPlagaDetec()

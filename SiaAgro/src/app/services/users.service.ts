@@ -143,6 +143,27 @@ export class UsersService {
   validTags(){
     return this.http.get(`${this.api_URL}/inteligencyArtificial-models-entrenamiento-Valid`);
   }
+  
+  InfoRendimientoIA(): Observable<any>{
+    return this.http.get(`${this.api_URL}/inteligencyArtificial-models-Informacion/rendimient`);
+  }
+
+  setDetectionIA(): Observable<any>{
+    return this.http.get(`${this.api_URL}/inteligencyArtificial-models-Informacion/detection`);
+  }
+
+  sendLikesIA(like: boolean, dislike: boolean): Observable<any>{
+    const likes = {
+      like: like,
+      dislike: dislike
+    }
+    return this.http.post(`${this.api_URL}/inteligencyArtificial-models-Informacion/likes`, likes);
+  }
+
+  sendInputOpinionModalIA(ModalInfIA:any){
+    return this.http.get(`${this.api_URL}/inteligencyArtificial-models-Informacion/presicion`, ModalInfIA);
+  }
+
   sendInputTextModalIA(ModalInfIA:any){
     return this.http.post(`${this.api_URL}/inteligencyArtificial-models-Informacion`, ModalInfIA);
   }
@@ -300,6 +321,7 @@ export class UsersService {
 
   // Login SiaAgro
   searchSiaAgroBD(login: any): Observable<any>{
+    console.log(this.api_URL)
     return this.http.post(`${this.api_URL}/login/Usuario`, login);
   }
 
