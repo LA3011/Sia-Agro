@@ -4,8 +4,8 @@ export default {
         host: 'localhost',
         user: 'postgres',
         password: 'root',
-        database: 'siaagrob',
-        port: 5433
+        database: 'siaagrodev',
+        port: 5432
     }
 
 } 

@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "D": "^1.0.0",
     "express": "^4.19.2",
+    "fast-folder-size": "^2.4.0",
     "file-type": "^19.2.0",
     "fs-extra": "^11.2.0",
     "https": "^1.0.0",

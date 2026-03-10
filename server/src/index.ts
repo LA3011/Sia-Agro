@@ -34,7 +34,7 @@ class Server {
 
     config():void{
         const http = require('http');
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', process.env.PORT || 3100);
         this.app.use(morgan('dev'))
         this.app.use(cors({
             origin: '*', 
@@ -93,7 +93,7 @@ class Server {
         // Leer: DataSet (Todo) | Configurar: Entrenamiento [./entrenamientoModels/entrenar.py] | Ejecutar: Entrenando Model 
         this.app.use('/api/inteligencyArtificial-models-entrenamiento-Completed',trainModelsCompleteRoutes);
 
-        // CRUD: Informacion de las Etiquetas BD
+        // CRUD: Informacion de las Etiquetas BD | Monitoreo: Presicion del Modelo
         this.app.use('/api/inteligencyArtificial-models-Informacion', infoModelsRoutes);
 
         // Manejo: Notificaciones de las Etiquetas BD
@@ -154,7 +154,7 @@ class Server {
     
     // Inicializar: Servidor | Otras Configuraciones
     start():void{
-        this.app.listen(3000, "192.168.1.109", () => {
+        this.app.listen(3100, () => {
             console.log("PUERTO", this.app.get('port'));
         } );
     } 
