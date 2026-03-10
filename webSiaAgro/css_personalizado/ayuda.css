@@ -1,0 +1,40 @@
+
+
+/* #172871
+#0DCAF0
+#FFBDD6
+#F4AA46
+#2CDE6C
+#6584F3 */
+p{
+    margin-left: 15px;
+    margin-bottom: 0;
+  }
+  .show1{
+    margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    display: block;
+    background-color: #F6F9FF;
+    width: 50%;
+    margin-left: 22%;
+    cursor:pointer;
+  }
+  .show1:hover{
+    /*border:0.5px solid #66A839;*/
+    transform: scale(1,1.1);
+    transition: 0.1s;
+    border-radius: 18px;
+    background-color: #1C2833;
+    color: white;
+  }
+  .show-check{
+    display: block; 
+    margin-left: 6%;
+  }
+  .show-descrip{
+    display: inline-block;
+    height:70%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+  }

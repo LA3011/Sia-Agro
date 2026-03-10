@@ -1,0 +1,33 @@
+
+  
+
+  .contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 8.5vh);
+  }
+
+  table {
+    width: 60%;
+    font-size: 14px;
+  }
+
+  table td,
+  table th {
+    padding: 10px;
+  }
+  table td, table th {
+      padding: 10px;
+      text-align: center;
+    }
+    th,a{
+      text-align: center;
+    }
+
+  .card-title {
+    color: black;
+    font-size: 40px;
+    margin-left: 7%;
+    text-align: center;
+  }

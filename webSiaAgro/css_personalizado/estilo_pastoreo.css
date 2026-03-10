@@ -1,0 +1,56 @@
+<style>
+
+.transparent-card {
+  background-color: transparent;
+}
+
+.content-wrapper {
+  margin-top: 150px;
+  /* Ajusta la cantidad de píxeles según sea necesario */
+}
+
+.empty-message {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+
+.punto-verde {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.punto-rojo {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.datatable-input::placeholder {
+  visibility: hidden;
+  content: "Referenciar";
+}
+
+.datatable-dropdown::after {
+  content: "Entradas por página";
+  position: relative;
+  left: -115px;
+}
+
+.datatable-dropdown>label {
+  visibility: hidden;
+}
+
+.datatable-selector {
+  visibility: visible;
+}
+.datatable-info{
+  visibility: hidden;
+}
+</style>ss

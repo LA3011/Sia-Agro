@@ -1,0 +1,66 @@
+
+  body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 10;
+        }
+
+        #map-container {
+            margin: 10;
+            padding: 10;
+            position: relative;
+            height: 90vh; /* Reduciendo la altura para dejar más espacio arriba */
+            width: 80%; /* Para que el mapa no ocupe toda la pantalla */
+            display: flex;
+            flex: 10;
+            flex-direction: column; /* Para que los elementos estén uno encima del otro */
+            align-items: center; /* Para centrar el contenido */
+            margin-left: 350px; /* Ancho del menú lateral */
+        }
+
+        #map {
+            height: 100%; /* Ajustando la altura del mapa */
+            width: 100%; /* Para que el mapa ocupe todo el ancho del contenedor */
+        }
+
+        #toolbar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #toolbar button {
+            margin-bottom: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #toolbar button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        #legend {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    

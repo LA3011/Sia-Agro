@@ -1,0 +1,1 @@
+{"frecuencia":"semanal","hora":"01:01","dia_semana":null}

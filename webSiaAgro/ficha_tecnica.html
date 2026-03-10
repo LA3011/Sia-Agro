@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facturación</title>
+  <script src="js/popper.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/bootstrap.min.js"></script>
+  
+<style>
+ /* General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f6fb; /* Fondo suave */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px; /* Bordes más suaves */
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra más elegante */
+    position: relative; /* Para posicionar los elementos en las esquinas */
+}
+
+/* Títulos */
+h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 30px;
+    font-size: 36px; /* Título más grande */
+    font-family: 'Georgia', serif; /* Fuente única y destacada */
+    font-weight: 700;
+    text-transform: uppercase; /* Mayúsculas para resaltar */
+}
+
+/* Estilo de los fieldsets */
+fieldset {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9fafc; /* Fondo más suave para los fieldsets */
+    transition: all 0.3s ease;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 18px;
+    color: #007bff;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+/* Inputs y etiquetas */
+label {
+    font-size: 14px;
+    color: #555;
+}
+
+input[type="number"], input[type="text"], textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Bordes redondeados */
+    transition: border 0.3s ease;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botones */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 16px; /* Botones más grandes */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Añadí un pequeño efecto */
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Pequeña elevación al hacer hover */
+}
+
+/* Layout de las secciones */
+.grid-secciones {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 12px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-footer button {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-footer button:hover {
+    background-color: #0056b3;
+}
+/* Interactividad y animación */
+fieldset:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave al hacer hover */
+    border-color: #007bff;
+    background-color: #eef6ff; /* Efecto de color suave al pasar sobre la sección */
+}
+
+.action-icons button {
+    background-color: #28a745;
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.action-icons button:hover {
+    background-color: #218838;
+}
+
+/* Estilos para el canvas */
+canvas {
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Posicionamiento del logo y la brújula */
+.logo {
+    position: absolute;
+    top: 20px;
+    width: 30px; /* Tamaño de la imagen */
+    height: 90px;
+}
+.brujula {
+    position: absolute;
+    top: 20px;
+    width: 300px; /* Tamaño de la imagen */
+    height: 120px;
+}
+.logo {
+    left: 10px; /* Logo en la esquina izquierda */
+}
+
+.brujula {
+    right: 10px; /* Brújula en la esquina derecha */
+}
+
+/* Responsive */
+@media only screen and (max-width: 1200px) {
+    .grid-secciones {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .grid-secciones {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .grid-secciones {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+</style>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <div class="container">
+    <form id="pointsForm" method="POST" action="procesar/procesar_ficha.php">
+    <img src="imagen/logo_ficha.png" class="logo" alt="Logo de la empresa">
+    <h2>Terreno y Ficha Técnica</h2>
+<img src="imagen/brujula2.jpg" class="brujula" alt="Brújula">
+
+    <div class="action-icons">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#largeModal">
+        Agregar Puntos Cardinales
+    </button>
+</div>
+
+<br>
+
+    <!-- Scripts para inicializar DataTables -->
+        <div class="grid-secciones">
+        <div id="pointSectionsContainer"></div>
+
+        <fieldset>
+                <legend>2. Coordendas </legend>
+                <div class="grid">
+
+             <label for="latitud">Latitud:</label>
+<input type="number" id="latitud" name="latitud" step="any" required>
+
+<label for="longitud">Longitud:</label>
+<input type="number" id="longitud" name="longitud" step="any" required> 
+
+                    <label for="area">Área (m²):</label>
+                    <input type="text" id="area" name="area" required>
+                   
+                </div>
+                 </fieldset>
+                 <fieldset>
+    <legend>3. Lindero Norte</legend>
+    <div class="grid">
+        <label for="latitud_norte">Latitud:</label>
+        <input type="text" id="latitud_norte" name="latitud_norte" required>
+        
+        <label for="longitud_norte">Longitud:</label>
+        <input type="text" id="longitud_norte" name="longitud_norte" required>
+
+        <label for="descripcion_norte">Descripción:</label>
+        <input type="text" id="descripcion_norte" name="descripcion_norte" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>4. Lindero Sur</legend>
+    <div class="grid">
+        <label for="latitud_sur">Latitud:</label>
+        <input type="text" id="latitud_sur" name="latitud_sur" required>
+        
+        <label for="longitud_sur">Longitud:</label>
+        <input type="text" id="longitud_sur" name="longitud_sur" required>
+        
+        <label for="descripcion_sur">Descripción:</label>
+        <input type="text" id="descripcion_sur" name="descripcion_sur" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>5. Lindero Este</legend>
+    <div class="grid">
+        <label for="latitud_este">Latitud:</label>
+        <input type="text" id="latitud_este" name="latitud_este" required>
+        
+        <label for="longitud_este">Longitud:</label>
+        <input type="text" id="longitud_este" name="longitud_este" required>
+        
+        <label for="descripcion_este">Descripción:</label>
+        <input type="text" id="descripcion_este" name="descripcion_este" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>6. Lindero Oeste</legend>
+    <div class="grid">
+        <label for="latitud_oeste">Latitud:</label>
+        <input type="text" id="latitud_oeste" name="latitud_oeste" required>
+        
+        <label for="longitud_oeste">Longitud:</label>
+        <input type="text" id="longitud_oeste" name="longitud_oeste" required>
+        
+        <label for="descripcion_oeste">Descripción:</label>
+        <input type="text" id="descripcion_oeste" name="descripcion_oeste" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>7. Lindero Noreste</legend>
+    <div class="grid">
+        <label for="latitud_noreste">Latitud:</label>
+        <input type="text" id="latitud_noreste" name="latitud_noreste" required>
+        
+        <label for="longitud_noreste">Longitud:</label>
+        <input type="text" id="longitud_noreste" name="longitud_noreste" required>
+        
+        <label for="descripcion_noreste">Descripción:</label>
+        <input type="text" id="descripcion_noreste" name="descripcion_noreste" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>8. Lindero Noroeste</legend>
+    <div class="grid">
+        <label for="latitud_noroeste">Latitud:</label>
+        <input type="text" id="latitud_noroeste" name="latitud_noroeste" required>
+        
+        <label for="longitud_noroeste">Longitud:</label>
+        <input type="text" id="longitud_noroeste" name="longitud_noroeste" required>
+        
+        <label for="descripcion_noroeste">Descripción:</label>
+        <input type="text" id="descripcion_noroeste" name="descripcion_noroeste" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>9. Lindero Sureste</legend>
+    <div class="grid">
+        <label for="latitud_sureste">Latitud:</label>
+        <input type="text" id="latitud_sureste" name="latitud_sureste" required>
+        
+        <label for="longitud_sureste">Longitud:</label>
+        <input type="text" id="longitud_sureste" name="longitud_sureste" required>
+        
+        <label for="descripcion_sureste">Descripción:</label>
+        <input type="text" id="descripcion_sureste" name="descripcion_sureste" required>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>10. Lindero Suroeste</legend>
+    <div class="grid">
+        <label for="latitud_suroeste">Latitud:</label>
+        <input type="text" id="latitud_suroeste" name="latitud_suroeste" required>
+        
+        <label for="longitud_suroeste">Longitud:</label>
+        <input type="text" id="longitud_suroeste" name="longitud_suroeste" required>
+        
+        <label for="descripcion_suroeste">Descripción:</label>
+        <input type="text" id="descripcion_suroeste" name="descripcion_suroeste" required>
+    </div>
+</fieldset>
+
+        
+    
+            <!-- Polígono -->
+            <fieldset>
+                <legend>11. Espacio</legend>
+                <div class="grid">
+             
+                    <label for="nombre_poligono">Nombre</label>
+                    <input type="text" id="nombre_poligono" name="nombre_poligono" required>
+                    
+                </div>
+            
+                </fieldset>
+            <!-- Coordenadas -->
+            
+            <!-- Sección: Topografía -->
+            <fieldset>
+                <legend>12. Topografía</legend>
+                <div class="grid">
+                    <label><input type="checkbox" name="plano"> Plano</label>
+                    <label><input type="checkbox" name="sobre_nivel"> Sobre Nivel</label>
+                    <label><input type="checkbox" name="bajo_nivel"> Bajo Nivel</label>
+                    <label><input type="checkbox" name="corte"> Corte</label>
+                    <label><input type="checkbox" name="relleno"> Relleno</label>
+                    <label><input type="checkbox" name="inclinado"> Inclinado</label>
+                    <label><input type="checkbox" name="irregular"> Irregular</label>
+                </div>
+            </fieldset>
+
+            <!-- Sección: Forma -->
+            <fieldset>
+                <legend>13. Forma</legend>
+                <div class="grid">
+                    <label><input type="checkbox" name="regular"> Regular</label>
+                    <label><input type="checkbox" name="irregular"> Irregular</label>
+                    <label><input type="checkbox" name="muy_irregular"> Muy Irregular</label>
+                </div>
+            </fieldset>
+
+            <!-- Sección: Ubicación -->
+            <fieldset>
+                <legend>14. Ubicación</legend>
+                <div class="grid">
+                    <label><input type="checkbox" name="convencional"> Convencional</label>
+                    <label><input type="checkbox" name="esquina"> Esquina</label>
+                    <label><input type="checkbox" name="interior_manzana"> Interior de Manzana</label>
+                </div>
+            </fieldset>
+
+            <!-- Sección: Entorno Físico -->
+            <fieldset>
+                <legend>15. Entorno Físico</legend>
+                <div class="grid">
+                    <label><input type="checkbox" name="zona_urbanizada"> Zona Urbanizada</label>
+                    <label><input type="checkbox" name="zona_no_urbanizada"> Zona No Urbanizada</label>
+                    <label><input type="checkbox" name="rio_quebrada"> Río/Quebrada</label>
+                    <label><input type="checkbox" name="barranco_talud"> Barranco/Talud</label>
+                    <label><input type="checkbox" name="otro_entorno"> Otro</label>
+                </div>
+            </fieldset>
+
+            <!-- Sección: Mejoras al Terreno -->
+            <fieldset>
+                <legend>16. Mejoras al Terreno</legend>
+                <div class="grid">
+                    <label><input type="checkbox" name="muro_contencion"> Muro de Contención</label>
+                    <label><input type="checkbox" name="nivelacion"> Nivelación</label>
+                    <label><input type="checkbox" name="cercado"> Cercado</label>
+                    <label><input type="checkbox" name="pozo_septico"> Pozo Séptico</label>
+                    <label><input type="checkbox" name="lagunas_artificiales"> Lagunas Artificiales</label>
+                    <label><input type="checkbox" name="otro_mejoras"> Otro</label>
+                </div>
+            </fieldset>
+                 <fieldset>
+            <legend>20.Tipo</legend>
+            <div class="grid">
+                <label><input type="checkbox" name="local_comercial"> Local Comercial</label>
+                <label><input type="checkbox" name="galpon"> Galpón</label>
+                <label><input type="checkbox" name="vaqueras"> Vaqueras</label>
+                <label><input type="checkbox" name="cochineras"> Cochineras</label>
+                <label><input type="checkbox" name="corrales_anexos"> Corrales y Anexos</label>
+                <label><input type="checkbox" name="bebederos"> Bebederos</label>
+                <label><input type="checkbox" name="comederos"> Comederos</label>
+                <label><input type="checkbox" name="tanques"> Tanques</label>
+                <label><input type="checkbox" name="otro_tipo"> Otro</label>
+            </div>
+        </fieldset>
+
+        <!-- Sección: Descripción de Uso -->
+        <fieldset>
+            <legend>21.Descripción de Uso</legend>
+            <div class="grid">
+
+                <label><input type="checkbox" name="oficinas"> Oficinas</label>
+                <label><input type="checkbox" name="industrial"> Industrial</label>
+                <label><input type="checkbox" name="servicio"> Servicio</label>
+                <label><input type="checkbox" name="agropecuario"> Agropecuario</label>
+                <label><input type="checkbox" name="otro_uso"> Otro</label>
+            </div>
+        </fieldset>
+
+            </div>
+
+    </div>
+    </from>
+    </div>
+    

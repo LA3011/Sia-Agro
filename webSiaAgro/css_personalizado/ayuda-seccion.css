@@ -1,0 +1,33 @@
+  p{
+    margin-left: 25px;
+    margin-bottom: 0;
+  }
+  .showVideo{
+    padding-top:12px;
+    padding-left:12px;
+    padding: 8px;
+    margin: 10px;
+    margin-left: 29px;
+    display: inline-block;
+    width: 27%;
+
+    border: 1px solid black;
+    box-shadow: 0px 0px 10px 0px #333 inset;
+    /*box-shadow: 0px 10px 10px -6px black;*/
+  }
+  .showVideo:hover{
+  /*border:0.5px solid #66A839;*/
+  transform: scale(1.05, 1.05);
+  transition: 0.1s;
+  }
+  .vid{
+    width: 300px;
+    height: 250px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .show-check{
+    display: flex; 
+    flex-wrap: wrap; 
+    margin-left: 10%;
+  }

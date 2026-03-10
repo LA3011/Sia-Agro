@@ -1,0 +1,62 @@
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #30880D;
+  height: 8.5vh;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 8.5vh);
+}
+
+table {
+  width: 60%;
+  font-size: 17px;
+}
+
+table td,
+table th {
+  padding: 10px;
+}
+
+.card-title {
+  color: black;
+  font-size: 70px;
+  margin-left: 7%;
+  text-align: center;
+}
+
+.datatable-info {
+  color: whitesmoke;
+  font-size: 0;
+}
+
+.col-lg-12 {
+  margin-bottom: 5%;
+}
+
+.datatable-input::placeholder {
+  visibility: hidden;
+  content: "Referenciar";
+}
+
+.datatable-dropdown::after {
+  content: "Entradas por página";
+  position: absolute;
+  left: 90px;
+  top: 162px;
+}
+
+.datatable-dropdown>label {
+  visibility: hidden;
+}
+
+.datatable-selector {
+  visibility: visible;
+}

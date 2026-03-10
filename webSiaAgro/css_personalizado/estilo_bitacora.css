@@ -1,0 +1,45 @@
+
+/* Estilos generales de las tablas */
+
+/* Estilos generales de las tarjetas */
+
+/* Estilos específicos de los contenedores */
+body {
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-image: url(""); /* Ruta de la imagen de fondo */
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #007bff;
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.table {
+  margin-bottom: 40px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.fa {
+  margin-right: 5px;
+}

@@ -1,0 +1,19 @@
+{
+    "name": "julieth/prueba",
+    "description": "Proyecto de prueba",
+    "autoload": {
+        "psr-4": {
+            "Julieth\\Prueba\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Julieth",
+            "email": "julieth@example.com"
+        }
+    ],
+    "require": {
+        "endroid/qr-code": "^3.4",
+        "proj4php/proj4php": "^2.0"
+    }
+}
