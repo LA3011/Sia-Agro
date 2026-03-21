@@ -20,13 +20,21 @@
     - El comando nvm use 18.20.4 se utiliza para cambiar la versión activa de Node.jsen tu sesión de terminal a la versión 18.20.4.
         > nvm use 18.20.4 
 
-# Detependencias en node 
-    - Instalacion typescript
-        > npm install -g typescript
-    - Instalacion Angular
-        > npm install -g @angular/cli@18.0.3
-    - Instalacion de Ionic 
-        > npm install -g @ionic/cli@7.2.0
+# Detependencias en nvm
+    - sudo apt update
+    - sudo apt install curl build-essential -y
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+    # configuración al archivo .bashrc para que Debian reconozca el comando nvm
+    - export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    - nvm --version
+    - nvm install 18.20.4
+    - nvm use 18.20.4
+    # Instalacion typescript
+    - npm install -g typescript
+    # Instalacion Angular
+    - npm install -g @angular/cli@18.0.3
+    # Instalacion de Ionic 
+    - npm install -g @ionic/cli@7.2.0
 
 # Install Python
 
@@ -56,7 +64,18 @@
         > python --version
 
 
-# Instalar Python Extensiones
+# Instalar Python Extensiones (Python 3.9.13)
+    # INSTALAR PYTHON 
+    - sudo apt update; sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+    - curl https://pyenv.run | bash
+    - echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+    - echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+    - echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+    - source ~/.bashrc
+    - pyenv install 3.9.13
+    - pyenv global 3.9.13 # globalmente usuario
     pip install pip==24.2
     pip install Keras==2.7.0
     pip install Keras-Applications==1.0.8 
