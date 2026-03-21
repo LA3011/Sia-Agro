@@ -197,3 +197,85 @@
             "endroid/qr-code": "3.4.*",
             "proj4php/proj4php": "2.0.*"
         }
+
+# Instalacion de NGINX
+    > sudo apt update
+    > sudo apt install nginx -y
+    > sudo systemctl status nginx # verificar estado del servicio
+        > sudo systemctl start nginx # iniciarlo
+    # Configuración del Firewall
+    > sudo ufw allow 'Nginx Full'
+
+# Resumen comandos 
+    Reiniciar (tras cambios en config): sudo systemctl restart nginx
+    Recargar (sin cortar conexiones): sudo systemctl reload nginx
+    Probar sintaxis (antes de romper nada): sudo nginx -t
+
+#  Agregar mi sistema web a nginx
+    > sudo mkdir -p /var/www/mi-sistema # Preparar la carpeta de tu proyecto
+    > sudo chown -R $USER:$USER /var/www/mi-sistema # permisos a tu usuario
+    > ... <Sube tus archivos (HTML, JS, CSS, etc.) a esa carpeta.>
+    > sudo nano /etc/nginx/sites-available/mi-sistema # Crear el archivo de configuración
+        > # Configuracion Base 
+        server {
+            listen 80;
+            listen [::]:80;
+        
+            root /var/www/mi-sistema;
+            index index.html index.htm;
+        
+            server_name tu-dominio.com www.tu-dominio.com;
+        
+            location / {
+                try_files $uri $uri/ =404;
+            }
+        }
+    > sudo ln -s /etc/nginx/sites-available/mi-sistema /etc/nginx/sites-enabled/ # Activar la configuración
+    > sudo nginx -t # Verificar y Reiniciar
+    > sudo systemctl restart nginx # Reiniciar NGINX
+
+# Instalacion PHP
+    # Instalar PHP y el procesador FPM
+    > sudo apt install php-fpm php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip -y
+        > php -v # verificar version
+    # Configurar el Bloque de Servidor (Server Block)
+        # NGINX, encuentre un archivo .php, se lo pase a PHP-FPM.
+    > sudo nano /etc/nginx/sites-available/mi-sistema
+        > ...
+        server {
+            listen 80;
+            server_name tu-dominio.com;
+            root /var/www/mi-sistema;
+        
+            # Importante: agregar index.php
+            index index.php index.html index.htm;
+        
+            location / {
+                try_files $uri $uri/ =404;
+            }
+        
+            # Pasar scripts PHP a FastCGI
+            location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                
+                # ASEGÚRATE de que la versión coincida con la instalada (ej. 8.1 o 8.2)
+                fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+            }
+        
+    
+            # Bloquear acceso a archivos .htaccess
+            location ~ /\.ht {
+                deny all;
+            }
+        }
+    # Verificar y Reiniciar
+    > sudo nginx -t
+    > sudo systemctl restart nginx
+    > sudo systemctl status php8.2-fpm # Asegurar que PHP-FPM esté corriendo
+    # Prueba de sistema PHP
+    > nano /var/www/mi-sistema/info.php
+    > ...
+        <?php
+            phpinfo();
+        ?>
+        
