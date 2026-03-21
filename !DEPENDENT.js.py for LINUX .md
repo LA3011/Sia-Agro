@@ -40,9 +40,10 @@
 
     Paso 1: Instalar las dependencias necesarias
         > sudo apt update
-        > sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-        xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+> sudo apt update && sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
+liblzma-dev python3-openssl
 
     Paso 2: Instalar pyenv
         > curl https://pyenv.run | bash
