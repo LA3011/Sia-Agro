@@ -102,6 +102,9 @@
 
     Paso 2: Verificar la instalación postgres
         > sudo systemctl status postgresql
+    
+    Paso 2.5: Instalar Driver de Postgres para PHP 
+        > apt install -y php-pgsql
 
     Paso 3: Configurar la contraseña del usuario postgres
         > sudo -u postgres psql
@@ -194,9 +197,11 @@
             Copyright (c) The PHP Group
             Zend Engine v3.4.0, Copyright (c) Zend Technologies
             with Zend OPcache v7.4.3-4ubuntu2.29, Copyright (c), by Zend Technologies
+    > php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" # descargar el archivo composer-setup.php
+    > php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     > composer -v
         Composer version 2.2.24 2024-06-10 22:51:52
-    
+    > composer install
     NOTA: se debe respetar las siguientes dependencias "composer.json"
         "require": {
             "php": "7.4.*",
